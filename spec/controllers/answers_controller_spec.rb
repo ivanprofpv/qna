@@ -7,8 +7,8 @@ RSpec.describe AnswersController, type: :controller do
   describe 'GET #show' do
     before { get :show, params: { id: answer } }
 
-    it 'устанавливаем переменную в объект (@answer), который запросили' do
-      expect(assigns(:answer)).to eq answer #равна ли инстанс-переменная ответу, который передали в строке выше
+    it 'check if the variable is set correctly in the controller (@answer)' do
+      expect(assigns(:answer)).to eq answer #is the instance variable equal to the answer passed in the line above
     end
 
     it 'render show view' do     
@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
 
     before { get :new, params: { question_id: question } }
 
-    it 'проверяем, устанавливается ли вопрос в переменную @answer' do
+    it 'check if the question is set to a variable @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
@@ -33,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
 
     before { get :edit, params: { id: answer } }
 
-    it 'устанавливаем переменную в объект (@answer), который запросили' do
+    it 'check if the variable is set correctly in the controller (@answer)' do
       expect(assigns(:answer)).to eq answer
     end
 
@@ -68,7 +68,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     context 'with valid attributes' do
-      it 'устанавливаем переменную в объект (@answer), который запросили' do
+      it 'check if the variable is set correctly in the controller(@answer)' do
         patch :update, params: { id: answer, answer: attributes_for(:answer) }
         expect(assigns(:answer)).to eq answer
       end

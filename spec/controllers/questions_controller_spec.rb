@@ -9,25 +9,25 @@ RSpec.describe QuestionsController, type: :controller do
     before { get :index }
 
     it 'заполнить массив всех вопросов из базы' do
-      #match_array хелпер, который проверяет, что что-то равно массиву (см документацию)
-      #assigns тоже хелпер, который позволяет вызвать
-      #инстанс-переменную из контроллера для теста
-      #questions в match_array здесь берется из let выше
+      #match_array helper that checks if something is equal to an array (see documentation)
+      #assigns is also a helper that allows you to call
+      #instance-variable from the controller for the test
+      #questions in match_array here is taken from let above
       expect(assigns(:questions)).to match_array(questions)
     end
 
     it 'render index view' do
-      #response - хелпер, который показывает ответ, который был последним в контроллере
+      #response - a helper that shows the last response in the controlle
       expect(response).to render_template :index
     end
   end
 
   describe 'GET #show' do
 
-    before { get :show, params: { id: question } } #передаем объект вопроса, где подставляется текущий id
+    before { get :show, params: { id: question } } #we pass the question object, where the current id is substituted
 
-    it 'устанавливаем переменную в объект (@question), который запросили' do
-      expect(assigns(:question)).to eq question #равна ли инстанс-переменная вопросу, который передали в строке выше
+    it 'check if the variable is set correctly in the controller (@question)' do
+      expect(assigns(:question)).to eq question #is the instance variable equal to the question passed in the line above
     end
 
     it 'render show view' do
@@ -39,7 +39,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :new }
 
-    it 'проверяем, устанавливается ли вопрос в переменную @question' do
+    it 'check if the question is set to a variable (@question)' do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
@@ -52,7 +52,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :edit, params: { id: question } }
 
-    it 'устанавливаем переменную в объект (@question), который запросили' do
+    it 'check if the variable is set correctly in the controller (@question)' do
       expect(assigns(:question)).to eq question
     end
 
@@ -87,11 +87,11 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     context 'with valid attributes' do
-      it 'устанавливаем переменную в объект (@question), который запросили' do
+      it 'check if the variable is set correctly in the controller (@question)' do
         patch :update, params: { id: question, question: attributes_for(:question) }
         expect(assigns(:question)).to eq question
       end
-      it 'изменяем существующие атрибуты' do
+      it 'change existing attributes' do
         patch :update, params: { id: question, question: { title: 'new title', body: 'new body' }}
         question.reload
 
