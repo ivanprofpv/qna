@@ -1,19 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let(:question) { create(:question, user:) }
 
   describe 'POST #create' do
-
     context 'authenticated user' do
       before { login(user) }
 
       context 'with valid attributes' do
-
         it 'saves a new answer in the database' do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer), user_id: user } }
-                                         .to change(question.answers, :count).by(1)
+            .to change(question.answers, :count).by(1)
         end
         it 'redirect to question' do
           post :create, params: { question_id: question, answer: attributes_for(:answer), user_id: user }
@@ -23,7 +23,10 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'with invalid attributes' do
         it 'does not save the answer' do
-          expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user } }.to_not change(question.answers, :count)
+          expect do
+            post :create,
+                 params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user }
+          end.to_not change(question.answers, :count)
         end
 
         it 're-renders new views' do
@@ -35,8 +38,10 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'unauthenticated user' do
       it 'does not save the question' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user } }
-                .to_not change(question.answers, :count)
+        expect do
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user }
+        end
+          .to_not change(question.answers, :count)
       end
 
       it 'redirect to sign in' do
@@ -47,26 +52,20 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-
     context 'authenticated user' do
       before { login(user) }
 
       context 'answer that the user created' do
-        let!(:answer) { create(:answer, question: question, user: user) }
-        
+        let!(:answer) { create(:answer, question:, user:) }
+
         it 'delete the answer' do
           expect { delete :destroy, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
-        end
-
-        it 'redirect to question' do
-          delete :destroy, params: { id: answer, question_id: question }
-          expect(response).to redirect_to questions_path(assigns(:answer).question)
         end
       end
 
       context 'answer that the user did not create' do
-        let!(:answer) { create(:answer, question: question, user: create(:user)) }
-        
+        let!(:answer) { create(:answer, question:, user: create(:user)) }
+
         it 'unsuccessful attempt to delete someone another answer' do
           expect { delete :destroy, params: { id: answer, question_id: question } }.to_not change(Answer, :count)
         end
@@ -79,8 +78,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'unauthenticated user' do
-
-      let!(:answer) { create(:answer, question: question, user: user) }
+      let!(:answer) { create(:answer, question:, user:) }
 
       it 'unsuccessful attempt to delete someone another answer' do
         expect { delete :destroy, params: { id: answer, user_id: user } }.to_not change(Answer, :count)

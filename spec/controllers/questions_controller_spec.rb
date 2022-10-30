@@ -86,14 +86,14 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'unauthenticated user' do 
+    context 'unauthenticated user' do
       before { get :edit, params: { id: question, user: user } }
 
-      it 'the question does not change' do 
+      it 'the question does not change' do
         expect(assigns(:question)).to_not eq question
       end
 
-      it 'redirect tosign in' do 
+      it 'redirect tosign in' do
         expect(assigns(:question)).to redirect_to new_user_session_path
       end
     end
@@ -109,6 +109,7 @@ RSpec.describe QuestionsController, type: :controller do
           expect { post :create, params: { question: attributes_for(:question), user: user } }
                  .to change(Question, :count).by(1)
         end
+
         it 'redirect to show views' do
           post :create, params: { question: attributes_for(:question), user: user }
           expect(response).to redirect_to assigns(:question)
@@ -135,6 +136,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirect to sign in' do
+        post :create, params: { question: attributes_for(:question), user: user }
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -191,7 +193,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq question.body
       end
 
-      it 'redirect to sign in' do 
+      it 'redirect to sign in' do
         patch :update, params: { id: question, question: attributes_for(:question), user: user }
 
         expect(response).to redirect_to new_user_session_path
@@ -205,16 +207,16 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       context 'delete a question that a user created' do
-      
-        let!(:question) { create(:question), user: user }
-        
+
+        let!(:question) { create(:question, user: user) }
+
         it 'delete the question' do
-          expect { delete :destroy, params: { id: question }, user: user }.to change(Question, :count).by(-1)
+          expect { delete :destroy, params: { id: question, user: user } }.to change(Question, :count).by(-1)
         end
 
         it 'redirect to index' do
           delete :destroy, params: { id: question }
-          expect(response).to redirect_to questions_path
+          expect(response).to redirect_to root_path
         end
       end
 
@@ -222,25 +224,25 @@ RSpec.describe QuestionsController, type: :controller do
 
         let!(:question) { create(:question, user: create(:user)) }
 
-        it 'the question has not been deleted' do 
-          expect { delete: destroy, params { id: question } }.to_not change(Question, :count)
+        it 'the question has not been deleted' do
+          expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
         end
 
-        it 'redirect to root' do 
+        it 'redirect to root' do
           delete :destroy, params: { id: question }
           expect(response).to redirect_to root_path
         end
       end
     end
 
-    context 'unauthenticated user' do 
-      let!(:question) { create(:question), user: user }
+    context 'unauthenticated user' do
+      let!(:question) { create(:question, user: user) }
 
-      it 'the question has not been deleted' do 
-        expect { delete: destroy, params { id: question } }.to_not change(Question, :count)
+      it 'the question has not been deleted' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
 
-      it 'redirect to sign in' do 
+      it 'redirect to sign in' do
         delete :destroy, params: { id: question }
         expect(response).to redirect_to new_user_session_path
       end
