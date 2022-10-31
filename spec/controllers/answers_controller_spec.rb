@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question, user:) }
+  let(:question) { create(:question, user: user) }
 
   describe 'POST #create' do
     context 'authenticated user' do
@@ -56,7 +56,7 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       context 'answer that the user created' do
-        let!(:answer) { create(:answer, question:, user:) }
+        let!(:answer) { create(:answer, question: question, user: user) }
 
         it 'delete the answer' do
           expect { delete :destroy, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
@@ -64,7 +64,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context 'answer that the user did not create' do
-        let!(:answer) { create(:answer, question:, user: create(:user)) }
+        let!(:answer) { create(:answer, question: question) }
 
         it 'unsuccessful attempt to delete someone another answer' do
           expect { delete :destroy, params: { id: answer, question_id: question } }.to_not change(Answer, :count)
@@ -78,7 +78,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'unauthenticated user' do
-      let!(:answer) { create(:answer, question:, user:) }
+      let!(:answer) { create(:answer, question: question) }
 
       it 'unsuccessful attempt to delete someone another answer' do
         expect { delete :destroy, params: { id: answer, user_id: user } }.to_not change(Answer, :count)
