@@ -3,6 +3,8 @@
 = form_with model: @question do |f|
   = f.label :title
   = f.text_field :title
-  = f.label :body
+  br
+  b= f.label :body
   = f.text_area :body
+  br
   = f.submit 'Ask'
