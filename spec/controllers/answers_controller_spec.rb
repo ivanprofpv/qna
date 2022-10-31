@@ -12,11 +12,11 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'with valid attributes' do
         it 'saves a new answer in the database' do
-          expect { post :create, params: { question_id: question, answer: attributes_for(:answer), user_id: user } }
+          expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }
             .to change(question.answers, :count).by(1)
         end
         it 'redirect to question' do
-          post :create, params: { question_id: question, answer: attributes_for(:answer), user_id: user }
+          post :create, params: { question_id: question, answer: attributes_for(:answer) }
           expect(response).to redirect_to assigns(:question)
         end
       end
@@ -25,12 +25,12 @@ RSpec.describe AnswersController, type: :controller do
         it 'does not save the answer' do
           expect do
             post :create,
-                 params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user }
+                 params: { question_id: question, answer: attributes_for(:answer, :invalid) }
           end.to_not change(question.answers, :count)
         end
 
         it 're-renders new views' do
-          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user }
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
           expect(response).to render_template 'questions/show'
         end
       end
@@ -39,13 +39,13 @@ RSpec.describe AnswersController, type: :controller do
     context 'unauthenticated user' do
       it 'does not save the question' do
         expect do
-          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), user_id: user }
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
         end
           .to_not change(question.answers, :count)
       end
 
       it 'redirect to sign in' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer), user_id: user }
+        post :create, params: { question_id: question, answer: attributes_for(:answer) }
         expect(response).to redirect_to new_user_session_path
       end
     end
