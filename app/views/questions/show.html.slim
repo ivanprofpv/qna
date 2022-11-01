@@ -3,5 +3,6 @@ p= @question.body
 
 - if current_user&.author?(@question)
   = link_to 'Delete question', question_path(@question), method: :delete
+.answer-errors
 = render partial: 'answers/answer', collection: @answers
 = render 'answers/form'

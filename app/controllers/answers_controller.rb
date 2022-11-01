@@ -18,11 +18,7 @@ class AnswersController < ApplicationController
 
     @answer.user = current_user
 
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Answer successfully created!'
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def update

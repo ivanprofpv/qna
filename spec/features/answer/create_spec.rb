@@ -4,7 +4,7 @@ feature 'The user can write the answer in the question' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  describe 'authenticated user' do 
+  describe 'authenticated user', js: true do 
     background do 
       sign_in(user)
       visit question_path(question)
@@ -14,13 +14,10 @@ feature 'The user can write the answer in the question' do
       fill_in 'Body', with: 'text body'
       click_on 'Reply'
 
-      expect(current_path).to eq question_path(question)
-      within '.answer_container' do 
-        expect(page).to have_content 'text body'
-      end
+      expect(page).to have_content 'text body'
     end
 
-    scenario 'empty answer' do 
+    scenario 'creates answer with errors' do 
       click_on 'Reply'
       expect(page).to have_content "Body can't be blank"
     end
