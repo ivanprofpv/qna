@@ -14,7 +14,10 @@ feature 'The user can write the answer in the question' do
       fill_in 'Body', with: 'text body'
       click_on 'Reply'
 
-      expect(page).to have_content 'text body'
+      expect(current_path).to eq question_path(question)
+      within '.answer_container' do 
+        expect(page).to have_content 'text body'
+      end
     end
 
     scenario 'empty answer' do 
