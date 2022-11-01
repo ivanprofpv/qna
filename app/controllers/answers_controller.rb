@@ -18,7 +18,9 @@ class AnswersController < ApplicationController
 
     @answer.user = current_user
 
-    @answer.save
+    if @answer.save
+      redirect_to question_path(@question), notice: 'Answer successfully created!'
+    end
   end
 
   def update
