@@ -7,17 +7,21 @@ feature 'User can delete their answer' do
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  describe 'authenticated user' do 
+  describe 'authenticated user', js: true do 
 
     scenario 'can delete their answer' do 
       sign_in(user)
       visit root_path
 
       click_on question.title
-      click_on 'Delete answer'
 
-      expect(page).to have_content 'Answer successfully deleted!'
-      expect(page).to_not have_content answer.body
+      within '.answers' do
+        expect(page).to have_content answer.body
+
+        click_on 'Delete answer'
+
+        expect(page).to_not have_content answer.body
+      end
     end
 
     scenario "user can't delete another user's answer" do 
@@ -26,18 +30,22 @@ feature 'User can delete their answer' do
 
     	click_on question.title
 
-    	expect(page).to_not have_content 'Delete answer'
+      within '.answers' do
+    	  expect(page).to_not have_content 'Delete answer'
+      end
     end
   end
 
-  describe 'unauthenticated user' do 
+  describe 'unauthenticated user', js: true do 
 
     scenario "can't delete answer" do 
     	visit root_path
 
     	click_on question.title
 
-    	expect(page).to_not have_content 'Delete answer'
+      within '.answers' do
+    	  expect(page).to_not have_content 'Delete answer'
+      end
     end
   end
 end

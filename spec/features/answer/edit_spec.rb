@@ -1,44 +1,50 @@
 require 'rails_helper'
 
-feature 'User can edit his answer', %q{
-  in order to correct mistakes
-  as an author of answer
-  i'd like ot be  able to edit my answer
-} do
+feature 'user can edit his answer' do
   given!(:user) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question) }
+  given!(:question) { create(:question, user: user) }
+  given!(:answer) { create(:answer, user: user, question: question) }
+  given!(:other_user) { create(:user) }
 
-  describe 'unauthenticated user' do
+  scenario 'unauthenticated can not edit answer' do
+    visit question_path(question)
 
-    scenario "can't write an answer" do
-      visit question_path(question)
-      expect(page).to_not have_link 'Edit answer'
-    end
+    expect(page).to_not have_link "Edit"
   end
 
-  describe 'authenticated user' do
-    background do
+  describe 'authenticated user', js: true do
+    scenario 'edits his answer' do
       sign_in(user)
       visit question_path(question)
-    end
 
-    scenario 'edit his answer' do
-      click_on 'Edit answer'
-
-      within '.answers' do 
-        fill_in 'Body', with: 'edited answer'
+      within '.answers' do
+        click_on 'Edit'
+        fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
-        expect(page).to have_content 'Edit answer'
+        expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
       end
     end
 
-    scenario 'edit his answer with errors'
+    scenario 'can not edit other answer' do
+      sign_in(other_user)
+      visit question_path(question)
 
-    scenario "tries to edit other user's question"
+      expect(page).to_not have_link "Edit"
+    end
+
+    scenario 'edit his answer with errors' do
+      sign_in(user)
+      visit question_path(question)
+
+      within '.answers' do
+        click_on "Edit"
+        fill_in 'Your answer', with: ''
+        click_on 'Save'
+        expect(page).to have_content "Body can't be blank"
+      end
+    end
   end
-
 end

@@ -1,8 +1,21 @@
-h1= @question.title
-p= @question.body
+.question
+  .question-error
+  .question_title
+    b= @question.title
+  .q-body
+    = @question.body
+  - if current_user&.author?(@question)
+    .question-controls
+      p= link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+      = link_to 'Delete question', question_path(@question), method: :delete
 
-- if current_user&.author?(@question)
-  = link_to 'Delete question', question_path(@question), method: :delete
-.answer-errors
-= render partial: 'answers/answer', collection: @answers
+      = form_with model: @question, local: false, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
+        = f.label :title, 'Title'
+        = f.text_field :title
+        = f.label :body, 'Body'
+        = f.text_area :body
+        = f.submit 'Save'
+
+.answers
+  = render @question.answers
 = render 'answers/form'

@@ -1,42 +1,33 @@
 class AnswersController < ApplicationController
-    before_action :authenticate_user!, except: %i[index show]
-    before_action :find_question, only: %i[new create]
-    before_action :load_answer, only: %i[show edit update destroy]
-
-  def show
-  end
-
-  def new
-    @answer = @question.answers.new
-  end
+    before_action :authenticate_user!, only: %i[create update destroy]
+    before_action :find_question, only: %i[create]
+    before_action :load_answer, only: %i[update destroy]
 
   def edit
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
 
     @answer.user = current_user
 
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Answer successfully created!'
-    end
+    @answer.save
   end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to answer_path(@answer)
+    @question = @answer.question
+    if current_user&.author?(@answer)
+      @answer.update(answer_params)
     else
-      render :edit
+      redirect_to question_path(@answer.question), notice: 'You are not permitted.'
     end
   end
 
   def destroy
     if current_user&.author?(@answer)
       @answer.destroy
-      redirect_to questions_path(@answer.question), notice: 'Answer successfully deleted!'
     else
-      redirect_to questions_path(@answer.question)
+      redirect_to question_path, notice: 'You cannot delete the wrong answer.'
     end
   end
 

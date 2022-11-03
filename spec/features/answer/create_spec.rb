@@ -11,15 +11,13 @@ feature 'The user can write the answer in the question' do
     end
 
     scenario 'can write the answer in the question' do
-      fill_in 'Body', with: 'text body'
-      click_on 'Reply'
-      sleep 2
+      fill_in 'Your answer', with: 'text body'
+      click_on 'Create Answer'
       expect(page).to have_content 'text body'
     end
 
     scenario 'creates answer with errors' do
-      click_on 'Reply'
-      sleep 2
+      click_on 'Create Answer'
       expect(page).to have_content "Body can't be blank"
     end
   end
@@ -28,7 +26,7 @@ feature 'The user can write the answer in the question' do
 
     scenario "can't write an answer" do
       visit question_path(question)
-      expect(page).to_not have_button 'Reply'
+      expect(page).to_not have_button 'Create Answer'
     end
   end
 
