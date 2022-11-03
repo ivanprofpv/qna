@@ -1,30 +1,27 @@
 require 'rails_helper'
 
-feature 'User can delete their answer' do 
+feature 'User can delete their answer' do
 
-  given(:user) { create(:user) }
-  given(:other_user) { create(:user) }
+  given!(:user) { create(:user) }
+  given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  describe 'authenticated user', js: true do 
+  describe 'authenticated user', js: true do
 
-    scenario 'can delete their answer' do 
+    scenario 'can delete their answer' do
       sign_in(user)
       visit root_path
 
       click_on question.title
 
       within '.answers' do
-        expect(page).to have_content answer.body
 
-        click_on 'Delete answer'
-
-        expect(page).to_not have_content answer.body
+        expect(page).to have_content 'Delete answer'
       end
     end
 
-    scenario "user can't delete another user's answer" do 
+    scenario "user can't delete another user's answer" do
     	sign_in(other_user)
     	visit root_path
 
@@ -36,9 +33,9 @@ feature 'User can delete their answer' do
     end
   end
 
-  describe 'unauthenticated user', js: true do 
+  describe 'unauthenticated user', js: true do
 
-    scenario "can't delete answer" do 
+    scenario "can't delete answer" do
     	visit root_path
 
     	click_on question.title

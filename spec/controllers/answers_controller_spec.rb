@@ -106,7 +106,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'unauthenticated user' do
-      context 'with valid attributes' do 
+      context 'with valid attributes' do
         it 'does not change attributes' do
           expect do
             patch :update, params: { id: answer, answer: answer }, format: :js
@@ -150,12 +150,12 @@ RSpec.describe AnswersController, type: :controller do
         let!(:answer) { create(:answer, question: question) }
 
         it 'unsuccessful attempt to delete someone another answer' do
-          expect { delete :destroy, params: { id: answer, question_id: question }, format: :js }.to_not change(Answer, :count)
+          expect { delete :destroy, params: { id: answer, question_id: question } }.to_not change(Answer, :count)
         end
 
-        it 'render template destroy' do
-          delete :destroy, params: { id: answer, question_id: question }, format: :js
-          expect(response).to render_template :destroy
+        it 'redirect to question' do
+          delete :destroy, params: { id: answer, question_id: question }
+          expect(response).to redirect_to question_path
         end
       end
     end
