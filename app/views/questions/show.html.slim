@@ -3,7 +3,7 @@
     = render 'shared/errors', resource: @question
   .question_title
     = @question.title
-  .q-body
+  .question-body
     = @question.body
   - if current_user&.author?(@question)
     .question-controls

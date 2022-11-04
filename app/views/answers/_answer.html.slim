@@ -1,7 +1,7 @@
 .answer
-  p 
+  p
     .answer_block
-      = answer.body 
+      = answer.body
       - if current_user&.author?(answer)
         p
           = link_to 'Delete answer', answer_path(answer), method: :delete
@@ -12,4 +12,4 @@
       = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
         = f.label :body, 'Your answer'
         br= f.text_area :body
-        = f.submit 'Save' 
+        = f.submit 'Save'

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User can edit his question' do
   given!(:user) { create(:user) }
   given!(:other_user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given(:question) { create(:question, user: user) }
   given!(:other_question) { create(:question, user: other_user) }
 
   describe 'Authenticated user', js: true do
@@ -17,15 +17,14 @@ feature 'User can edit his question' do
 
         within '.question-controls' do
           click_on 'Edit'
-          fill_in 'Title', with: 'title ask'
-          fill_in 'Body', with: 'body ask'
+          fill_in 'Title', with: 'title text'
+          fill_in 'Body', with: 'body text'
+          save_and_open_page
           click_on 'Save'
         end
 
-        expect(page).to_not have_content question.title
-        expect(page).to_not have_content question.body
-        expect(page).to have_content 'title ask'
-        expect(page).to have_content 'body ask'
+        expect(page).to have_content 'title text'
+        expect(page).to have_content 'body text'
       end
 
       scenario "can't edit other user's question" do

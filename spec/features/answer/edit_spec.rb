@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 feature 'user can edit his answer' do
-  given!(:user) { create(:user) }
+  given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, user: user, question: question) }
-  given!(:other_user) { create(:user) }
+  given(:other_user) { create(:user) }
 
   scenario 'unauthenticated can not edit answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link "Edit"
+    expect(page).to_not have_link ' | Edit'
   end
 
   describe 'authenticated user', js: true do
@@ -17,7 +17,8 @@ feature 'user can edit his answer' do
       sign_in(user)
       visit question_path(question)
 
-      within '.answers' do
+      within '.answer_block' do
+        save_and_open_page
         click_on 'Edit'
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
@@ -31,16 +32,16 @@ feature 'user can edit his answer' do
     scenario 'can not edit other answer' do
       sign_in(other_user)
       visit question_path(question)
-
-      expect(page).to_not have_link "Edit"
+      save_and_open_page
+      expect(page).to_not have_link 'Edit'
     end
 
     scenario 'edit his answer with errors' do
       sign_in(user)
       visit question_path(question)
 
-      within '.answers' do
-        click_on "Edit"
+      within '.answer_block' do
+        click_on 'Edit'
         fill_in 'Your answer', with: ''
         click_on 'Save'
         expect(page).to have_content "Body can't be blank"

@@ -1,11 +1,11 @@
-- if current_user.present?
-  .answer-errors
-    = render 'shared/errors', resource: @answer
+.answer-errors
+  = render 'shared/errors', resource: @answer
 
-.answer_block
-  = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
-    = f.label :body, 'Your answer'
-    p
-    = f.text_area :body
-    p
-    = f.submit 'Create Answer'
+.answer_block_create
+  - if current_user.present?
+    = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
+      = f.label :body, 'Your answer'
+      p
+      = f.text_area :body
+      p
+      = f.submit 'Create Answer'
