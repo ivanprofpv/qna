@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
-    before_action :authenticate_user!, only: %i[create update destroy]
+    before_action :authenticate_user!, only: %i[create update destroy best]
     before_action :find_question, only: %i[create]
-    before_action :load_answer, only: %i[update destroy]
+    before_action :load_answer, only: %i[update destroy best]
 
   def edit
   end
@@ -29,6 +29,14 @@ class AnswersController < ApplicationController
       redirect_to question_path(@answer.question), notice: 'Answer successfully deleted.'
     else
       redirect_to question_path, notice: 'You cannot delete the wrong answer.'
+    end
+  end
+
+  def best
+    @question = @answer.question
+
+    if current_user.author?(@question)
+      @answer.set_best
     end
   end
 

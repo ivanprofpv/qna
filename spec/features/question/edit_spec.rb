@@ -19,8 +19,8 @@ feature 'User can edit his question' do
           click_on 'Edit'
           fill_in 'Title', with: 'title text'
           fill_in 'Body', with: 'body text'
-          save_and_open_page
           click_on 'Save'
+          save_and_open_page
         end
 
         expect(page).to have_content 'title text'

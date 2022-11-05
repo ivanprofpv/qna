@@ -1,4 +1,4 @@
-.answer
+.answer class=["answer-id-#{answer.id}" " #{answer.best? ? 'best-answer' : ''}"]
   p
     .answer_block
       = answer.body
@@ -6,6 +6,10 @@
         p
           = link_to 'Delete answer', answer_path(answer), method: :delete
           = link_to ' | Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+      - if current_user&.author?(answer.question) && !answer.best?
+        = link_to 'Best answer', best_answer_path(answer),
+          remote: true, method: :patch, class: 'best-answer-link', data: { answer_id: answer.id }
 
       div class=["answer-error-#{answer.id}"]
 
