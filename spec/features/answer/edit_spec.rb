@@ -66,5 +66,24 @@ feature 'user can edit his answer' do
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'delete attachments' do
+      sign_in(user)
+      visit question_path(question)
+      within '.answer_block' do
+        click_on 'Edit'
+        first('attach_files').click_on 'Delete attachment'
+      end
+
+      expect(page).to_not have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'can not other user delete attachments' do
+      sign_in(user)
+      visit question_path(other_question)
+
+      expect(page).to_not have_link 'Delete attachment'
+    end
   end
 end

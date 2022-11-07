@@ -57,10 +57,25 @@ feature 'User can edit his question' do
           attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
           click_on 'Save'
         end
-          visit question_path(question)
 
           expect(page).to have_link 'rails_helper.rb'
           expect(page).to have_link 'spec_helper.rb'
+      end
+
+      scenario 'delete attachments' do
+        within '.question-controls' do
+          click_on 'Edit'
+          first('attach_files').click_on 'Delete attachment'
+        end
+
+        expect(page).to_not have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+
+      scenario 'can not other user delete attachments' do
+        visit question_path(other_question)
+        
+        expect(page).to_not have_link 'Delete attachment'
       end
     end
   end
