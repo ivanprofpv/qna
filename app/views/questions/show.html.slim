@@ -5,17 +5,24 @@
     = @question.title
   .question-body
     = @question.body
+
+  - if @question.files.attached?
+    - @question.files.each do |file|
+      p= link_to file.filename.to_s, url_for(file)
+
   - if current_user&.author?(@question)
     .question-controls
       = link_to 'Delete question', question_path(@question), method: :delete
       = link_to ' | Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
 
       = form_with model: @question, local: false, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
-        = f.label :title, 'Title'
-        = f.text_field :title
-        = f.label :body, 'Body'
-        = f.text_area :body
-        = f.submit 'Save'
+        p= f.label :title, 'Title'
+        p= f.text_field :title
+        p= f.label :body, 'Body'
+        p= f.text_area :body
+        p= f.label :files
+        p= f.file_field :files, multiple: true
+        p= f.submit 'Save'
 
 .answers
   = render @question.answers

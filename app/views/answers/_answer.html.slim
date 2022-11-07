@@ -2,9 +2,13 @@
   p
     .answer_block
       = answer.body
+      p
+        - if @answer.files.attached?
+          - @answer.files.each do |file|
+            p= link_to file.filename.to_s, url_for(file)
       - if current_user&.author?(answer)
         p
-          = link_to 'Delete answer', answer_path(answer), method: :delete
+          = link_to 'Delete answer', answer_path(answer), remote: true, method: :delete, class: 'delete-answer-link', data: { answer_id: answer.id }
           = link_to ' | Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
       - if current_user&.author?(answer.question) && !answer.best?
@@ -15,5 +19,7 @@
 
       = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
         = f.label :body, 'Your answer'
-        br= f.text_area :body
-        = f.submit 'Save'
+        p= f.text_area :body
+        p= f.label :files
+        p= f.file_field :files, multiple: true
+        p= f.submit 'Save'

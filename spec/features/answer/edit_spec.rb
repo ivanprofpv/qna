@@ -2,9 +2,10 @@ require 'rails_helper'
 
 feature 'user can edit his answer' do
   given(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
-  given!(:answer) { create(:answer, user: user, question: question) }
   given(:other_user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
+  given!(:other_question) { create(:question, user: other_user) }
+  given!(:answer) { create(:answer, user: user, question: question) }
 
   scenario 'unauthenticated can not edit answer' do
     visit question_path(question)
@@ -33,6 +34,12 @@ feature 'user can edit his answer' do
       sign_in(other_user)
       visit question_path(question)
       save_and_open_page
+      expect(page).to_not have_link 'Edit'
+    end
+
+    scenario 'other user can not edit answer' do
+      visit question_path(other_question)
+
       expect(page).to_not have_link 'Edit'
     end
 

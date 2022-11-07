@@ -4,8 +4,8 @@
 .answer_block_create
   - if current_user.present?
     = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
-      = f.label :body, 'Your answer'
-      p
-      = f.text_area :body
-      p
+      p= f.label :body, 'Your answer'
+      p= f.text_area :body
+      p= f.label :files
+      p= f.file_field :files, multiple: true
       = f.submit 'Create Answer'

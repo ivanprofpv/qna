@@ -20,6 +20,16 @@ feature 'The user can write the answer in the question' do
       click_on 'Create Answer'
       expect(page).to have_content "Body can't be blank"
     end
+
+    scenario 'can attach files to the answer' do 
+      fill_in 'Your answer', with: 'text body'
+
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Create Answer'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
   end
 
   describe 'unauthenticated user' do
