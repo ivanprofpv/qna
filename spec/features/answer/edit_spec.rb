@@ -10,7 +10,7 @@ feature 'user can edit his answer' do
   scenario 'unauthenticated can not edit answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link ' | Edit'
+    expect(page).to_not have_link 'Edit'
   end
 
   describe 'authenticated user', js: true do
@@ -60,7 +60,7 @@ feature 'user can edit his answer' do
       within '.answer_block' do
         click_on 'Edit'
         attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
-  click_on 'Save'
+        click_on 'Save'
       end
 
       expect(page).to have_link 'rails_helper.rb'
@@ -72,7 +72,11 @@ feature 'user can edit his answer' do
       visit question_path(question)
       within '.answer_block' do
         click_on 'Edit'
-        first('attach_files').click_on 'Delete attachment'
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        click_on 'Edit'
+        first('.attachment').click_on 'Delete attachment'
       end
 
       expect(page).to_not have_link 'rails_helper.rb'
