@@ -20,9 +20,9 @@ class QuestionsController < ApplicationController
 
     @question.user = current_user
 
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    end
+    return unless @question.save
+
+    redirect_to @question, notice: 'Your question successfully created.'
   end
 
   def update

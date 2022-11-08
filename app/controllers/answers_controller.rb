@@ -1,10 +1,9 @@
 class AnswersController < ApplicationController
-    before_action :authenticate_user!, only: %i[create update destroy best]
-    before_action :find_question, only: %i[create]
-    before_action :load_answer, only: %i[update destroy best]
+  before_action :authenticate_user!, only: %i[create update destroy best]
+  before_action :find_question, only: %i[create]
+  before_action :load_answer, only: %i[update destroy best]
 
-  def edit
-  end
+  def edit; end
 
   def create
     @answer = @question.answers.create(answer_params)
@@ -35,9 +34,9 @@ class AnswersController < ApplicationController
   def best
     @question = @answer.question
 
-    if current_user.author?(@question)
-      @answer.set_best
-    end
+    return unless current_user.author?(@question)
+
+    @answer.set_best
   end
 
   private
