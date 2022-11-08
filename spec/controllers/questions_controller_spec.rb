@@ -11,26 +11,26 @@ RSpec.describe QuestionsController, type: :controller do
     before { get :index }
 
     it 'fill in the array of all questions from the database' do
-      #match_array helper that checks if something is equal to an array (see documentation)
-      #assigns is also a helper that allows you to call
-      #instance-variable from the controller for the test
-      #questions in match_array here is taken from let above
+      # match_array helper that checks if something is equal to an array (see documentation)
+      # assigns is also a helper that allows you to call
+      # instance-variable from the controller for the test
+      # questions in match_array here is taken from let above
       expect(assigns(:questions)).to match_array(questions)
     end
 
     it 'render index view' do
-      #response - a helper that shows the last response in the controlle
+      # response - a helper that shows the last response in the controlle
       expect(response).to render_template :index
     end
   end
 
   describe 'GET #show' do
-    let(:answers) { create_list :answer, 3, question: question, user: user }
+    let(:answers) { create_list :answer, 3, question: question, user: user}
 
-    before { get :show, params: { id: question } } #we pass the question object, where the current id is substituted
+    before { get :show, params: { id: question } } # we pass the question object, where the current id is substituted
 
     it 'check if the variable is set correctly in the controller (@question)' do
-      expect(assigns(:question)).to eq question #is the instance variable equal to the question passed in the line above
+      expect(assigns(:question)).to eq question # is the instance variable equal to the question passed in the line above
     end
 
     it 'fill the array of @answers' do
@@ -48,7 +48,6 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     context 'authenticated user' do
-
       before { login(user) }
       before { get :new }
 
@@ -62,7 +61,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'unauthenticated user' do
-
       before { get :new }
 
       it 'redirect to log in' do
@@ -76,10 +74,9 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       context 'with valid attributes' do
-
         it 'saves a new question in the database' do
           expect { post :create, params: { question: attributes_for(:question) } }
-                 .to change(Question, :count).by(1)
+            .to change(Question, :count).by(1)
         end
 
         it 'redirect to show views' do
@@ -91,7 +88,7 @@ RSpec.describe QuestionsController, type: :controller do
       context 'with invalid attributes' do
         it 'does not save the questions' do
           expect { post :create, params: { question: attributes_for(:question, :invalid) }, format: :js }
-                  .to_not change(Question, :count)
+            .to_not change(Question, :count)
         end
 
         it 'render template create' do
@@ -102,10 +99,9 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'unauthenticated user' do
-
       it 'does not save a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }
-                .to_not change(Question, :count)
+          .to_not change(Question, :count)
       end
 
       it 'redirect to sign in' do
@@ -120,7 +116,6 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       context 'with valid attributes' do
-
         it 'check if the variable is set correctly in the controller (@question)' do
           patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
           expect(assigns(:question)).to eq question
@@ -157,7 +152,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'unauthenticated user' do
-
       it 'does not update question' do
         patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
         question.reload
@@ -176,11 +170,9 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'authenticated user' do
-
       before { login(user) }
 
       context 'delete a question that a user created' do
-
         let!(:question) { create(:question, user: user) }
 
         it 'delete the question' do
@@ -194,7 +186,6 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       context 'delete a question that the user did not create' do
-
         let!(:question) { create(:question, user: create(:user)) }
 
         it 'the question has not been deleted' do

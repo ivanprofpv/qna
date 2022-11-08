@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'User can log out' do
-
   given(:user) { create(:user) }
   background { visit new_user_session_path }
 

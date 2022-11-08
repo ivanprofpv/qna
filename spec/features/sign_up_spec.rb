@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'User can sign up' do
-
   given(:user) { create(:user) }
   background { visit new_user_registration_path }
 

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AttachmentsController, type: :controller do
-
   describe 'DELETE #destroy' do
     let!(:user) { create(:user) }
     let!(:other_user) { create(:user) }
@@ -10,11 +9,14 @@ RSpec.describe AttachmentsController, type: :controller do
     context 'authenticated user' do
       before { login user }
 
-      context "the author uploaded the attachment" do
+      context 'the author uploaded the attachment' do
         let!(:author_attachment) { create(:question, user: user, files: [attachment]) }
 
         it 'can remove attachment' do
-          expect { delete :destroy, params: { id: author_attachment.files.first }, format: :js }.to change(author_attachment.files, :count).by(-1)
+          expect do
+            delete :destroy, params: { id: author_attachment.files.first },
+                             format: :js
+          end.to change(author_attachment.files, :count).by(-1)
         end
 
         it 'render destroy' do
@@ -23,11 +25,14 @@ RSpec.describe AttachmentsController, type: :controller do
         end
       end
 
-      context "attachment owner another author" do
+      context 'attachment owner another author' do
         let!(:author_attachment) { create(:question, user: other_user, files: [attachment]) }
 
         it 'can not remove attachment' do
-          expect { delete :destroy, params: { id: author_attachment.files.first }, format: :js }.to_not change(author_attachment.files, :count)
+          expect do
+            delete :destroy, params: { id: author_attachment.files.first },
+                             format: :js
+          end.to_not change(author_attachment.files, :count)
         end
 
         it 'render destroy' do
@@ -41,7 +46,10 @@ RSpec.describe AttachmentsController, type: :controller do
       let!(:author_attachment) { create(:question, user: user, files: [attachment]) }
 
       it 'can not remove attachment' do
-        expect { delete :destroy, params: { id: author_attachment.files.first }, format: :js }.to_not change(author_attachment.files, :count)
+        expect do
+          delete :destroy, params: { id: author_attachment.files.first },
+                           format: :js
+        end.to_not change(author_attachment.files, :count)
       end
 
       it 'redirect to log in' do
