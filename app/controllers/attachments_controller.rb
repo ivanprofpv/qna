@@ -3,8 +3,8 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @attachment = ActiveStorage::Attachment.find(params[:id])
-    return unless current_user.author?(@attachment.record)
-
-    @attachment.purge
+    if current_user.author?(@attachment.record)
+      @attachment.purge
+    end
   end
 end
