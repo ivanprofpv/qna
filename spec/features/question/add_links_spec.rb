@@ -5,9 +5,16 @@ feature 'User can add links to question', "
   as an question's author
   i'd like to be able to add links
 " do
-  
+
   given(:user) { create(:user) }
   given(:gist_url) { 'https://gist.github.com/ivanprofpv/8ff9f7ff3c27dbac5ccec5cbc6aff558' }
+
+  background do
+    sign_in(user)
+
+    visit questions_path
+    click_on 'Ask question'
+  end
 
   scenario 'User adds link when asks question' do
     fill_in 'Title', with: 'title text'
@@ -15,7 +22,7 @@ feature 'User can add links to question', "
 
     fill_in 'Link name', with: 'My gist'
     fill_in 'Url', with: gist_url
-    save_and_open_page
+
     click_on 'Ask'
 
     expect(page).to have_link 'My gist', href: gist_url
