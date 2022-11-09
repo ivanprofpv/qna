@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_07_063142) do
+ActiveRecord::Schema.define(version: 2022_11_09_054749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 2022_11_07_063142) do
 
   create_table "answers", force: :cascade do |t|
     t.string "body", null: false
-    t.boolean "correct"
     t.bigint "question_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -53,6 +52,15 @@ ActiveRecord::Schema.define(version: 2022_11_07_063142) do
     t.boolean "best", default: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.bigint "question_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_links_on_question_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -80,5 +88,6 @@ ActiveRecord::Schema.define(version: 2022_11_07_063142) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "links", "questions"
   add_foreign_key "questions", "users"
 end

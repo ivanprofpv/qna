@@ -55,6 +55,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect(assigns(:question)).to be_a_new(Question)
       end
 
+      it 'check if the question is set to a variable (@question)' do
+        expect(assigns(:question).links.first).to be_a_new(Link)
+      end
+
       it 'render new view' do
         expect(response).to render_template :new
       end
