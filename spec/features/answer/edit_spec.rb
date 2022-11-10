@@ -32,7 +32,6 @@ feature 'user can edit his answer' do
     scenario 'can not edit other answer' do
       sign_in(other_user)
       visit question_path(question)
-      save_and_open_page
       expect(page).to_not have_link 'Edit'
     end
 

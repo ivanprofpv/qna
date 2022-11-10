@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 2022_11_09_054749) do
 
   create_table "answers", force: :cascade do |t|
     t.string "body", null: false
-    t.boolean "correct"
     t.bigint "question_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -58,10 +57,11 @@ ActiveRecord::Schema.define(version: 2022_11_09_054749) do
   create_table "links", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.bigint "question_id"
+    t.string "linkable_type"
+    t.bigint "linkable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_links_on_question_id"
+    t.index ["linkable_type", "linkable_id"], name: "index_links_on_linkable"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -89,6 +89,5 @@ ActiveRecord::Schema.define(version: 2022_11_09_054749) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
-  add_foreign_key "links", "questions"
   add_foreign_key "questions", "users"
 end

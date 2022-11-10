@@ -37,8 +37,12 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answers)).to match_array(answers)
     end
 
-    it 'assigns a new Answer to @answer' do
+    it 'assigns a new answer for question' do
       expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'assigns a new link for answer' do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
     end
 
     it 'render show view' do
