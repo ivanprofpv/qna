@@ -2,12 +2,6 @@
   p
     .answer_block
       = answer.body
-      .links
-        p Links:
-        ul
-          - answer.links.each do |link|
-            li= link_to link.name, link.url
-
       p
         - if answer.files.attached?
           - answer.files.each do |file|
@@ -16,7 +10,15 @@
               = " | "
               = link_to 'Delete attachment', attachment_path(file), method: :delete, remote: true, class: 'attachmentss'
 
-
+      p
+        - answer.links.each do |link|
+          div id="link-delete-#{link.id}"
+            .link-delete
+              = link_to link.name, link.url
+              - if current_user&.author?(answer)
+                = " | "
+                = link_to 'Delete link', link_path(link), method: :delete, remote: true
+      p
         - if current_user&.author?(answer)
           p
             = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }

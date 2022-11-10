@@ -52,7 +52,7 @@ feature 'User can add links to answer', "
 
       click_on 'Edit'
       save_and_open_page
-      click_on 'delete link'
+      click_on 'Delete link'
 
       expect(page).to_not have_link 'My gist', href: gist_url
     end
@@ -71,6 +71,13 @@ feature 'User can add links to answer', "
       click_on 'Save'
 
       expect(page).to have_link 'Yandex', href: two_url
+    end
+
+    scenario 'user add gist link answer' do
+      click_on 'Create Answer'
+
+      expect(page).to have_content 'text.txt'
+      expect(page).to have_content 'text question'
     end
 
   scenario 'user adds invalid links', js: true do

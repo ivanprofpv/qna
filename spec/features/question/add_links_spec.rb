@@ -49,17 +49,9 @@ feature 'User can add links to question', "
 
       click_on 'Edit'
 
-      click_on 'delete link'
+      click_on 'Delete link'
 
       expect(page).to_not have_link 'My gist', href: gist_url
-    end
-
-    scenario 'user adds invalid links' do
-      fill_in 'Url', with: 'http ya .ru'
-
-      click_on 'Ask'
-
-      expect(page).to_not have_link 'My gist', href: 'http ya .ru'
     end
 
     scenario 'user adds link when editing' do
@@ -76,5 +68,23 @@ feature 'User can add links to question', "
 
       expect(page).to have_link 'Yandex', href: two_url
     end
+
+    scenario 'user add gist link question' do
+      click_on 'Ask'
+
+      expect(page).to have_content 'text.txt'
+      expect(page).to have_content 'text question'
+    end
+
+  scenario 'user adds invalid links' do
+    fill_in 'Your answer', with: 'My answer'
+
+    fill_in 'Link name', with: 'My gist'
+    fill_in 'Url', with: 'http://ya. ru'
+
+    click_on 'Ask'
+
+    expect(page).to_not have_link 'My gist', href: 'http://ya. ru'
+  end
   end
 end
