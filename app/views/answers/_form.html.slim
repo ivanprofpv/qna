@@ -6,13 +6,12 @@
     = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
       p= f.label :body, 'Your answer'
       p= f.text_area :body
+      p Links
+      #answer_links
+        = f.fields_for :links do |l|
+        .links
+          = link_to_add_association 'add link', f, :links,
+            partial: 'links/link'
       p= f.label :files
       p= f.file_field :files, multiple: true
-      p Links:
-      p
-        = f.fields_for :links do |l|
-          p= l.label :name, 'Link name'
-          p= l.text_field :name
-          p= l.label :url
-          p= l.text_field :url
       = f.submit 'Create Answer'

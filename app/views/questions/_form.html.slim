@@ -11,11 +11,10 @@
       p= f.file_field :files, multiple: true
 
       p Links:
-      p
+      #question_links
         = f.fields_for :links do |l|
-          p= l.label :name, 'Link name'
-          p= l.text_field :name
-          p= l.label :url
-          p= l.text_field :url
+        .links
+        = link_to_add_association 'add link', f, :links,
+          partial: 'links/link'
 
       p= f.submit 'Ask'
