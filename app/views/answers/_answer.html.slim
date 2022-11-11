@@ -13,7 +13,7 @@
       p
         - answer.links.each do |link|
           div id="link-delete-#{link.id}"
-            .link-delete
+            .link-name
               = link_to link.name, link.url
               - if current_user&.author?(answer)
                 = " | "
@@ -34,11 +34,11 @@
         = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
           = f.label :body, 'Your answer'
           p= f.text_area :body
-          p= f.label :files
+          p= f.label :files, 'Files:'
           p= f.file_field :files, multiple: true
-
+          p Links:
           p= f.fields_for :links do |l|
-            .links
-              = link_to_add_association 'add link', f, :links,
-                partial: 'links/link'
+          .links
+            p= link_to_add_association 'Add link', f, :links,
+              partial: 'links/link'
           p= f.submit 'Save'

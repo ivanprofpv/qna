@@ -40,7 +40,7 @@ function gistData(gist_id, domLink) {
 }
 
 function findGistLinks() {
-  let linkTags = document.querySelectorAll('.link a')
+  let linkTags = document.querySelectorAll('.link-name a')
   linkTags.forEach((domLink) => {
     let link = domLink.href
     if (link.match(GIST_REGEX)) {
