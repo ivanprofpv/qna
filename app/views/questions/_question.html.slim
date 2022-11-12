@@ -22,6 +22,10 @@
             = " | "
             = link_to 'Delete link', link_path(link), method: :delete, remote: true
 
+  - if @question.award.present?
+    b Award:
+    = image_tag url_for(@question.award.image)
+
   - if current_user&.author?(@question)
     .question-controls
       = link_to 'Delete question', question_path(@question), method: :delete

@@ -1,16 +1,49 @@
 require 'rails_helper'
 
-feature 'User can add award to heir question', "
-  so that for the best answer,
-  another user can receive a reward
-" do
+feature 'User can add award to heir question' do
 
   describe 'authenticated user' do
+    given(:user) { create(:user) }
+    given(:image) { "#{Rails.root}/spec/support/award_image.png" }
 
-    scenario 'can add an award to their question when creating'
+    background do
+      sign_in(user)
+      visit root_path
+      click_on 'Ask question'
+      fill_in 'Title', with: 'Title'
+      fill_in 'Body', with: 'Text question'
+    end
 
-    scenario 'adds an invalid reward (no picture)'
+    scenario 'can add an award to their question when creating' do
+      within '.award' do
+        fill_in 'Award title', with: 'Award title'
 
-    scenario 'adds an invalid reward (no title)'
+        attach_file 'Select image', image
+      end
 
+      click_on 'Ask'
+
+      expect(page).to have_content 'Your question successfully created.'
+    end
+
+    scenario 'adds an invalid reward (no picture)' do
+      within '.award' do
+        fill_in 'Award title', with: 'Award title'
+      end
+
+      click_on 'Ask'
+
+      expect(page).to have_content 'No image attached!'
+    end
+
+    scenario 'adds an invalid reward (no title)' do
+      within '.award' do
+        attach_file 'Select image', image
+      end
+
+      click_on 'Ask'
+
+      expect(page).to have_content "Award title can't be blank"
+    end
+  end
 end

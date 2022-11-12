@@ -81,7 +81,7 @@ feature 'User can add links to answer', "
       fill_in 'Url', with: gist_url
 
       click_on 'Create Answer'
-
+      sleep 1
       expect(page).to have_content 'gistfile1.txt'
       expect(page).to have_content 'hello world'
     end
