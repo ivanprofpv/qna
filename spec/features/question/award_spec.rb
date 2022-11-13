@@ -4,7 +4,7 @@ feature 'User can add award to heir question' do
 
   describe 'authenticated user' do
     given(:user) { create(:user) }
-    given(:image) { "#{Rails.root}/spec/support/award_image.png" }
+    given(:image) { "#{Rails.root}/spec/fixtures/award_image.png" }
 
     background do
       sign_in(user)
@@ -26,17 +26,17 @@ feature 'User can add award to heir question' do
       expect(page).to have_content 'Your question successfully created.'
     end
 
-    scenario 'adds an invalid reward (no picture)' do
+    scenario 'adds an invalid reward (no picture)', js: true do
       within '.award' do
         fill_in 'Award title', with: 'Award title'
       end
-
+      
       click_on 'Ask'
 
       expect(page).to have_content 'No image attached!'
     end
 
-    scenario 'adds an invalid reward (no title)' do
+    scenario 'adds an invalid reward (no title)', js: true do
       within '.award' do
         attach_file 'Select image', image
       end
