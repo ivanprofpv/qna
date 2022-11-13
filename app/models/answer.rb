@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :links, :award, reject_if: :all_blank, allow_destroy: true
 
   def set_best
-    Answer.transaction do 
+    Answer.transaction do
       Answer.where(question_id: question_id, best: true).update_all(best: false)
       update!(best: true)
       if question.award

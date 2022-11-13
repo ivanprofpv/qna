@@ -64,7 +64,7 @@ feature 'User can add links to answer', "
       click_on 'Create Answer'
 
       click_on 'Edit'
-      
+
       within '.answer_block' do
         click_on 'Add link'
         fill_in 'Link name', with: 'Yandex'
@@ -77,7 +77,7 @@ feature 'User can add links to answer', "
     end
 
     scenario 'user add gist link answer' do
-      
+
       fill_in 'Url', with: gist_url
 
       click_on 'Create Answer'
