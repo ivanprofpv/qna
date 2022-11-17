@@ -3,7 +3,7 @@
 
 .answer_block_create
   - if current_user.present?
-    = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
+    = form_with model: [@question, @answer], local: false, class: 'new-answer', data: { type: :json } do |f|
       p= f.label :body, 'Your answer'
       p= f.text_area :body
       p Links:

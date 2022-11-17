@@ -1,10 +1,12 @@
-.questions_main
+.questions_main class=["question-id-#{@question.id}"]
   .question-error
     = render 'shared/errors', resource: @question
   .question_title
     = @question.title
   .question-body
     = @question.body
+
+  = render partial: 'votes/vote', locals: { votable: @question }
 
   - if @question.files.attached?
     - @question.files.each do |file|

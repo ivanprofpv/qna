@@ -1,0 +1,6 @@
+.votes
+  .wrapper
+    - if user_signed_in? && !current_user&.author?(votable)
+      = render partial: 'votes/visual_voting_process', locals: { votable: votable }
+    - else
+      = render partial: 'votes/current_voting_result', locals: { votable: votable }
