@@ -13,3 +13,7 @@ require("jquery")
 require("@nathanvda/cocoon")
 require("links/gist")
 require("votes/vote")
+require("action_cable")
+
+var App = App || {}
+App.cable = ActionCable.createConsumer();
