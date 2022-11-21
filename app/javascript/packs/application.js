@@ -13,7 +13,7 @@ require("jquery")
 require("@nathanvda/cocoon")
 require("links/gist")
 require("votes/vote")
-require("action_cable")
-
-var App = App || {}
-App.cable = ActionCable.createConsumer();
+// Support component names relative to this directory:
+var componentRequireContext = require.context("components", true);
+var ReactRailsUJS = require("react_ujs");
+ReactRailsUJS.useContext(componentRequireContext);

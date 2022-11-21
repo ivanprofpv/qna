@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show update destroy]
+  after_action :post_question, only: %i[create]
 
   def index
     @questions = Question.all
@@ -13,6 +14,12 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     @answers = @question.answers
     @answer.links.new
+
+    gon.push(
+      current_user: current_user&.id,
+      question_owner: @question.user.id,
+      question_id: @question.id
+      )
   end
 
   def new
@@ -58,5 +65,11 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                       links_attributes: [:name, :url, :_destroy],
                                       award_attributes: [:title, :image])
+  end
+
+  def post_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast('questions', QuestionSerializer.new(@question).as_json)
   end
 end
