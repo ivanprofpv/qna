@@ -1,6 +1,8 @@
 .questions_main class=["question-id-#{@question.id}"]
   .question-error
     = render 'shared/errors', resource: @question
+  #user-id data-user-id="#{current_user&.id}"
+  #question-id data-question-id="#{question.id}"
   .question_title
     = @question.title
   .question-body
