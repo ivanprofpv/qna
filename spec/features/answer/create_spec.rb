@@ -38,4 +38,29 @@ feature 'The user can write the answer in the question' do
       expect(page).to_not have_button 'Create Answer'
     end
   end
+
+  describe "checking mulitple sessions" do
+    scenario "answer appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Your answer', with: 'text body'
+        click_on 'Create Answer'
+
+        expect(page).to have_content question.title
+        expect(page).to have_content 'text body'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'text body'
+      end
+    end
+  end
 end

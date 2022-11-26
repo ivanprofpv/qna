@@ -4,3 +4,9 @@
 import { createConsumer } from "@rails/actioncable"
 
 export default createConsumer()
+
+$(document).on('turbolinks:load', function() {
+  if (this.subscription) {
+    consumer.subscriptions.remove(this.subscription)
+  }
+})

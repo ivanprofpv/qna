@@ -10,6 +10,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params)
+    SendAnswerJob.perform_later(@answer) if @answer.errors.empty?
 
     @answer.user = current_user
 
