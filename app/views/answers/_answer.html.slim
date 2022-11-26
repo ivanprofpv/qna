@@ -3,7 +3,35 @@
     .answer_block
       = answer.body
 
-      = render partial: 'votes/vote', locals: { votable: answer }
+      .votes
+        .wrapper
+          - if user_signed_in? && !current_user&.author?(answer)
+            .rating
+              = answer.rating
+            .like
+              - @vote = vote(current_user, answer)
+              = link_to polymorphic_path([:like, answer]), class: 'vote vote-up', method: :post, remote: true do
+                span
+                  | like  
+                - if @vote&.like?
+                  i.fa.fa-thumbs-up class="fa-lg"
+                - else
+                  i.fa.fa-thumbs-o-up class="fa-lg"
+            .dislike
+              = link_to polymorphic_path([:dislike, answer]), class: 'vote vote-down', method: :post, remote: true do
+                span
+                  | dislike 
+                - if @vote&.dislike?
+                  i.fa.fa-thumbs-down class="fa-lg"
+                - else
+                  i.fa.fa-thumbs-o-down class="fa-lg"
+          - else
+            .rating
+              = answer.rating
+            .like
+              i.fa.fa-thumbs-o-up class="fa-lg"
+            .dislike
+              i.fa.fa-thumbs-o-down class="fa-lg"
 
       p
         - if answer.files.attached?

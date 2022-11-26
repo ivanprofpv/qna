@@ -1,8 +1,9 @@
 class AnswersChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "question_answers_channel_#{params[:question]}"
+    reject if params[:question].blank?
   end
 
-  def unsubscribed
+  def follow
+    stream_from "question_answers_channel_#{params[:question]}"
   end
 end

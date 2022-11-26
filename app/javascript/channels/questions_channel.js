@@ -15,4 +15,4 @@ $(document).on('turbolinks:load', function() {
     })
     this.subscription = subscription
   }
-});
+})

@@ -1,26 +1,19 @@
 import consumer from "./consumer"
 
 $(document).on('turbolinks:load', function() {
-  if (document.querySelector('.answers')) {
-    const question_element = document.getElementById('question-id')
-    const question_id = question_element.getAttribute('data-question-id')
+  const answers = $('.answers') 
 
-      var subscription = consumer.subscriptions.create( { channel: "AnswersChannel", question: question_id }, {
+  if (answers.length) {
+    consumer.subscriptions.create( { channel: "AnswersChannel", question: gon.question_id }, {
       connected() {
-      },
-
-      disconnected() {
+        this.perform('follow')
       },
 
       received(data) {
-        const user_element = document.getElementById('user-id')
-        const user_id = user_element.getAttribute('data-user-id')
-
-        if (user_id != data['user']) {
-          $('.answers').append(data['html'])
+        if (data.author_id != gon.user_id) {
+          answers.append(data.html)
         }
       }
     })
-    this.subscription = subscription
   }
 })
