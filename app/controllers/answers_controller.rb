@@ -10,10 +10,9 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params)
-    SendAnswerJob.perform_later(@answer) if @answer.errors.empty?
 
     @answer.user = current_user
-
+    publish_answer
     @answer.save
   end
 
@@ -44,6 +43,16 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    html = ApplicationController.render(
+      partial: 'answers/answer_block',
+      locals: { answer: @answer }
+    )
+
+    ActionCable.server.broadcast("question_answers_channel_#{@question.id}",
+                                 { html: html, author_id: @answer.user.id })
+  end
 
   def find_question
     @question = Question.find(params[:question_id])

@@ -1,7 +1,5 @@
-.answers
+.answer_block
   = answer.body
-
-  = render partial: 'votes/vote', locals: { votable: answer }
 
   p
     - if answer.files.attached?

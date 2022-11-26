@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    gon.question_id = @question.id
+    gon.user_id = current_user&.id
     @answer = Answer.new
     @answers = @question.answers
     @answer.links.new
