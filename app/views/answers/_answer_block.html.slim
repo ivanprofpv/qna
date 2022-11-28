@@ -21,3 +21,7 @@
       div id="link-delete-#{link.id}"
         .link-name
           = link_to link.name, link.url
+
+  p
+  .comments
+    = render answer.comments

@@ -1,0 +1,8 @@
+= form_with(model: [commentable, comment], local: false) do |f|
+  div class="comment-errors small"
+    = render 'shared/errors', resource: @question
+
+  .mb-3
+    = f.text_field :body, class: 'form-control'
+
+  = f.submit 'Add a comment', class: 'btn btn-info'

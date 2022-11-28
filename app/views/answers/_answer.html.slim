@@ -49,6 +49,14 @@
               - if current_user&.author?(answer)
                 = " | "
                 = link_to 'Delete link', link_path(link), method: :delete, remote: true
+
+      p
+      .comments
+        = render answer.comments
+
+      - if current_user
+        = render 'comments/form', commentable: answer, comment: @answer_comment
+           
       p
         - if current_user&.author?(answer)
           p
