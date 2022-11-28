@@ -1,19 +1,23 @@
 .answer_block
   = answer.body
 
+  .votes
+    .wrapper
+      .rating
+        = answer.rating
+      .like
+        i.fa.fa-thumbs-o-up class="fa-lg"
+      .dislike
+        i.fa.fa-thumbs-o-down class="fa-lg"
+
   p
     - if answer.files.attached?
       - answer.files.each do |file|
         .attachment id="attachment-#{file.id}"
           = link_to file.filename.to_s, url_for(file)
-          = " | "
-          = link_to 'Delete attachment', attachment_path(file), method: :delete, remote: true, class: 'attachmentss'
 
   p
     - answer.links.each do |link|
       div id="link-delete-#{link.id}"
         .link-name
           = link_to link.name, link.url
-          - if current_user&.author?(answer)
-            = " | "
-            = link_to 'Delete link', link_path(link), method: :delete, remote: true
