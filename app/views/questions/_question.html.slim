@@ -26,6 +26,14 @@
             = " | "
             = link_to 'Delete link', link_path(link), method: :delete, remote: true
 
+  .comments
+      = render @question.comments
+
+  - if current_user
+    = render 'comments/form', commentable: @question, comment: @question_comment
+
+  p
+
   - if @question.award.present?
     b Award:
     = image_tag url_for(@question.award.image)

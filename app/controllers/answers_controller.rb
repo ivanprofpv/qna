@@ -12,14 +12,15 @@ class AnswersController < ApplicationController
     @answer = @question.answers.create(answer_params)
 
     @answer.user = current_user
-    publish_answer
-    @answer.save
+    publish_answer if @answer.save
+    @answer_comment = @answer.comments.new
   end
 
   def update
     @question = @answer.question
     if current_user&.author?(@answer)
       @answer.update(answer_params)
+      @answer_comment = @answer.comments.new
     else
       redirect_to question_path(@answer.question), notice: 'You are not permitted.'
     end

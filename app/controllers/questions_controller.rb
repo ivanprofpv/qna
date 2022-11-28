@@ -15,6 +15,8 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     @answers = @question.answers
     @answer.links.new
+    @question_comment = @question.comments.new
+    @answer_comment = @answer.comments.new
   end
 
   def new
