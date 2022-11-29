@@ -26,11 +26,12 @@
             = " | "
             = link_to 'Delete link', link_path(link), method: :delete, remote: true
 
-  .comments
-    = render @question.comments
+  div class="comment_question_#{question.id}"
+    .comments
+      = render @question.comments
 
-  - if current_user
-    = render 'comments/form', commentable: @question
+    - if current_user
+      = render 'comments/form', commentable: @question, comment: @question_comment
 
   p
 
