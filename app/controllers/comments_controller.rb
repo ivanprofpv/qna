@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
 
   def create
     @comment = commentable.comments.create(comment_params.merge(user: current_user))
+
+    publish_comment if @comment.save
   end
 
   private

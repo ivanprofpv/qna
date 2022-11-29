@@ -14,10 +14,8 @@ $(document).on('turbolinks:load', function() {
       },
 
       received(data) {
-        const userId = $('#user-id').data('userId')
-
-        if (data.author_id != userId) {
-          $(`#${data.commentable_selector}`).find('.comments').append(data.html)
+        if (data.author_id != gon.user_id) {
+          $('#${data.commentable_selector}').find('.comments').append(data.html)
         }
       }
     })
