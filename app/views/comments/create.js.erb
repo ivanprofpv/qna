@@ -1,4 +1,4 @@
-commentable = $('#<%= @commentable.class.name.underscore %>-<%= @commentable.id %>')
+let commentable = $('.comment_<%= @commentable.class.to_s.downcase %>_<%= @commentable.id %>')
 
 <% if @comment.errors.any? %>
   $(commentable).find('.comment-errors').html('<%= j render 'shared/errors', resource: @comment %>')
