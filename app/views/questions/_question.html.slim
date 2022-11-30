@@ -1,4 +1,4 @@
-.questions_main class=["question-id-#{@question.id}"]
+div id="question-#{@question.id}" data-question-id="#{@question.id}"
   .question-error
     = render 'shared/errors', resource: @question
   #user-id data-user-id="#{current_user&.id}"
@@ -57,7 +57,6 @@
   div class="comment_question_#{question.id}"
     .comments
       = render @question.comments
-
     - if current_user
-      .comment-form
-        = render 'comments/form', commentable: @question
+    .comment-form
+      = render 'comments/form', commentable: @question

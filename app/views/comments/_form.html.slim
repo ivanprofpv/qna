@@ -1,6 +1,6 @@
 = form_with model: [commentable, commentable.comments.new], local: false do |f|
   div class="comment-errors"
     = render 'shared/errors', resource: @comment
-  p= f.label :body, 'Write a comment:'
+  p= f.label :body, 'comment:'
   p= f.text_area :body, class: 'form-control'
   = f.submit 'Add a comment', class: 'btn btn-info'
