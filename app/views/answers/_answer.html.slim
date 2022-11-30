@@ -3,35 +3,7 @@
     .answer_block
       = answer.body
 
-      .votes
-        .wrapper
-          - if user_signed_in? && !current_user&.author?(answer)
-            .rating
-              = answer.rating
-            .like
-              - @vote = vote(current_user, answer)
-              = link_to polymorphic_path([:like, answer]), class: 'vote vote-up', method: :post, remote: true do
-                span
-                  | like
-                - if @vote&.like?
-                  i.fa.fa-thumbs-up class="fa-lg"
-                - else
-                  i.fa.fa-thumbs-o-up class="fa-lg"
-            .dislike
-              = link_to polymorphic_path([:dislike, answer]), class: 'vote vote-down', method: :post, remote: true do
-                span
-                  | dislike
-                - if @vote&.dislike?
-                  i.fa.fa-thumbs-down class="fa-lg"
-                - else
-                  i.fa.fa-thumbs-o-down class="fa-lg"
-          - else
-            .rating
-              = answer.rating
-            .like
-              i.fa.fa-thumbs-o-up class="fa-lg"
-            .dislike
-              i.fa.fa-thumbs-o-down class="fa-lg"
+      = render partial: 'votes/vote', locals: { votable: answer }
 
       p
         - if answer.files.attached?
@@ -53,20 +25,13 @@
       p
         - if current_user&.author?(answer)
           p
-            = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }
+            = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, class: 'btn btn-danger delete-answer-link', data: { answer_id: answer.id }
             = " | "
-            = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+            = link_to 'Edit', '#', class: 'btn btn-info edit-answer-link', data: { answer_id: answer.id }
 
         - if current_user&.author?(answer.question) && !answer.best?
-          = link_to 'Best answer', best_answer_path(answer),
-            remote: true, method: :patch, class: 'best-answer-link', data: { answer_id: answer.id }
-
-        div class="comment_answer_#{answer.id}"
-          .comments
-            = render answer.comments
-
-            - if current_user
-              = render 'comments/form', commentable: answer, comment: @answer_comment
+          p= link_to 'Best answer', best_answer_path(answer),
+            remote: true, method: :patch, class: 'btn btn-info best-answer-link', data: { answer_id: answer.id }
 
         div class=["answer-error-#{answer.id}"]
 
@@ -78,6 +43,16 @@
           p Links:
           p= f.fields_for :links do |l|
           .links
-            p= link_to_add_association 'Add link', f, :links,
-              partial: 'links/link'
-          p= f.submit 'Save'
+            p= link_to_add_association 'Add link', f, :links, partial: 'links/link'
+          p= f.submit 'Save', class: 'btn btn-success'
+
+        p
+        p= "Comments:"
+
+        div class="comment_answer_#{answer.id}"
+          .comments
+            = render answer.comments
+
+          - if current_user
+            .comment-form
+              = render 'comments/form', commentable: answer

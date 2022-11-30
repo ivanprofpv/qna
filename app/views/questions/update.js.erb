@@ -1,8 +1,8 @@
-$('.question-error').html('<%= render 'shared/errors', resource: @question %>');
+$('.question-error').html('<%= render 'shared/errors', resource: @question %>')
 
 <% if !@question.errors.present? %>
-  $('.question-container .questions_main').remove();
-  $('.question-container').append('<%= j render @question %>');
-  var event = new Event('gist:updated');
-  document.dispatchEvent(event);
+  $('.question-container .questions_main').remove()
+  $('.question-container').append('<%= j render @question %>')
+  var event = new Event('gist:updated')
+  document.dispatchEvent(event)
 <% end %>

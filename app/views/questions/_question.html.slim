@@ -25,14 +25,6 @@
           - if current_user&.author?(@question)
             = " | "
             = link_to 'Delete link', link_path(link), method: :delete, remote: true
-
-  div class="comment_question_#{question.id}"
-    .comments
-      = render @question.comments
-
-    - if current_user
-      = render 'comments/form', commentable: @question, comment: @question_comment
-
   p
 
   - if @question.award.present?
@@ -41,8 +33,9 @@
 
   - if current_user&.author?(@question)
     .question-controls
-      = link_to 'Delete question', question_path(@question), method: :delete
-      = link_to ' | Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+      = link_to 'Delete question', question_path(@question), class: 'btn btn-danger', method: :delete
+      = " | "
+      = link_to 'Edit', '#', class: 'btn btn-info edit-question-link', data: { question_id: @question.id }
 
       = form_with model: @question, local: false, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
         p= f.label :title, 'Title'
@@ -56,4 +49,15 @@
         .links
           p= link_to_add_association 'Add link', f, :links,
             partial: 'links/link'
-        p= f.submit 'Save'
+        p= f.submit 'Save', class: 'btn btn-success'
+
+  p
+  p= "Comments:"
+
+  div class="comment_question_#{question.id}"
+    .comments
+      = render @question.comments
+
+    - if current_user
+      .comment-form
+        = render 'comments/form', commentable: @question

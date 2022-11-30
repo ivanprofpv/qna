@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
       locals: { comment: @comment }
     )
 
-    ActionCable.server.broadcast('comments', { html: html, author_id: @comment.user.id }
+    ActionCable.server.broadcast('comments', { html: html, comment_data: @comment}
     )
   end
 

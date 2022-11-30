@@ -23,5 +23,6 @@
           = link_to link.name, link.url
 
   p
-  .comments
-    = render answer.comments
+  div class="comment_answer_#{answer.id}"
+    .comments
+      = render answer.comments
