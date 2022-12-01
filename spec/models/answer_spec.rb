@@ -1,6 +1,4 @@
 require 'rails_helper'
-require_relative 'concerns/votable'
-require_relative 'concerns/commentable'
 
 RSpec.describe Answer, type: :model do
   it { should belong_to :question }

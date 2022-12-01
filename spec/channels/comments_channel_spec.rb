@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CommentsChannel, type: :channel do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'test subscribes' do
+    subscribe
+
+    expect(subscription).to be_confirmed
+  end
 end

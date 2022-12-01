@@ -1,12 +1,12 @@
-div id="question-#{@question.id}" data-question-id="#{@question.id}"
+.questions_main class=["question-id-#{@question.id}"] id="question-#{@question.id}" data-question-id="#{@question.id}"
   .question-error
     = render 'shared/errors', resource: @question
-  #user-id data-user-id="#{current_user&.id}"
-  #question-id data-question-id="#{question.id}"
   .question_title
     = @question.title
   .question-body
     = @question.body
+
+  p
 
   = render partial: 'votes/vote', locals: { votable: @question }
 
@@ -17,19 +17,23 @@ div id="question-#{@question.id}" data-question-id="#{@question.id}"
         = " | "
         = link_to 'Delete attachment', attachment_path(file), method: :delete, remote: true
 
+  p
+
   - @question.links.each do |link|
     div id="link-delete-#{link.id}"
-      p
-        .link-name
-          = link_to link.name, link.url
-          - if current_user&.author?(@question)
-            = " | "
-            = link_to 'Delete link', link_path(link), method: :delete, remote: true
+      .link-name
+        = link_to link.name, link.url
+        - if current_user&.author?(@question)
+          = " | "
+          = link_to 'Delete link', link_path(link), method: :delete, remote: true
+
   p
 
   - if @question.award.present?
     b Award:
     = image_tag url_for(@question.award.image)
+
+  p
 
   - if current_user&.author?(@question)
     .question-controls
@@ -48,10 +52,11 @@ div id="question-#{@question.id}" data-question-id="#{@question.id}"
         p= f.fields_for :links do |l|
         .links
           p= link_to_add_association 'Add link', f, :links,
-            partial: 'links/link'
+              partial: 'links/link'
         p= f.submit 'Save', class: 'btn btn-success'
 
   p
+
   p= "Comments:"
 
   div class="comment_question_#{question.id}"

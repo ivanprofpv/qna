@@ -59,7 +59,6 @@ feature 'User can add links to question', "
     scenario 'user adds link when editing' do
       click_on 'Ask'
       click_on 'Edit'
-  
       within '.question-controls' do
         click_on 'Add link'
 
@@ -68,7 +67,7 @@ feature 'User can add links to question', "
       end
 
       click_on 'Save'
-
+      sleep 2
       expect(page).to have_link 'Yandex', href: two_url
     end
 

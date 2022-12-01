@@ -14,7 +14,7 @@ $(document).on('turbolinks:load', function() {
       },
 
       received(data) {
-        if (data.author_id != gon.user_id) {
+        if (!data.author_id) {
           var commentElement = $('.comment_' + data.comment_data.commentable_type.toLowerCase() + '_' + data.comment_data.commentable_id)
           $(commentElement).find('.comments').append(data['html'])
         }
