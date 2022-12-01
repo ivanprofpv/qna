@@ -1,8 +1,8 @@
 FactoryBot.define do
+  sequence(:comment_body) { |n| "MyComment-#{n}-Text" }
+
   factory :comment do
-    commentable { nil }
-    user
-    body { 'Comment' }
+    body { generate(:comment_body) }
 
     trait :invalid do
       body { nil }
