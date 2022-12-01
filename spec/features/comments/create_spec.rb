@@ -42,23 +42,19 @@ feature 'User can add comment for question and answers' do
       end
 
       Capybara.using_session('user') do
+        visit question_path(question)
         within "#question-#{question.id}" do
-          fill_in 'comment:', with: 'question comment'
-          click_on 'Add a comment'
-        end
-        sleep 2
-        within "#answer-#{answer.id}" do
-          fill_in 'comment:', with: 'answer comment'
+          fill_in(id: 'comment_body', with: 'question comment')
+          click_button 'Add a comment'
           save_and_open_page
-          click_on 'Add a comment'
         end
         sleep 2
         expect(page).to have_content 'question comment'
       end
+
       sleep 2
       Capybara.using_session('guest') do
         expect(page).to have_content('question comment')
-        expect(page).to have_content('answer comment')
       end
     end
   end
