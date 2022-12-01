@@ -1,5 +1,4 @@
-div id="answer-#{answer.id}" class="card mb-3"
-.answer class=["answer-id-#{answer.id}" " #{answer.best? ? 'best-answer' : ''}"]
+.answer id="answer-#{answer.id}" class=["answer-id-#{answer.id}" " #{answer.best? ? 'best-answer' : ''}"]
   p
     .answer_block
       = answer.body
@@ -50,9 +49,10 @@ div id="answer-#{answer.id}" class="card mb-3"
         p
         p= "Comments:"
 
-      div class="comment_answer_#{answer.id}"
-        .comments
-          = render answer.comments
-      - if current_user
-          .comment-form
-            = render 'comments/form', commentable: answer
+        div class="comment_answer_#{answer.id}"
+          .comments
+            = render answer.comments
+          - if current_user
+            .comment-form
+              = render 'comments/form', commentable: answer
+  

@@ -50,7 +50,6 @@ feature 'User can vote to question' do
   end
 
   scenario 'can not upvote your own question' do
-    save_and_open_page
     sign_in author
     visit question_path(question)
     within '.question-container' do
