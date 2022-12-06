@@ -86,6 +86,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    capybara-email (3.0.2)
+      capybara (>= 2.4, < 4.0)
+      mail
     childprocess (4.1.0)
     cocoon (1.2.15)
     concurrent-ruby (1.1.10)
@@ -129,6 +132,10 @@ GEM
       thor (>= 0.14, < 2.0)
     json (2.6.2)
     jwt (2.5.0)
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -348,17 +355,19 @@ DEPENDENCIES
   bootstrap (~> 5.1.3)
   byebug
   capybara (>= 3.26)
+  capybara-email
   cocoon
   devise
   factory_bot_rails
   gon (~> 6.4)
   jbuilder (~> 2.7)
   jquery-rails
+  letter_opener
   octicons_helper
   omniauth
-  omniauth-github
-  omniauth-rails_csrf_protection
-  omniauth-vkontakte
+  omniauth-github (~> 2.0)
+  omniauth-rails_csrf_protection (~> 1.0)
+  omniauth-vkontakte (~> 1.8)
   pg (>= 0.18, < 2.0)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)

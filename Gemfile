@@ -37,9 +37,9 @@ gem 'octicons_helper'
 gem "cocoon"
 gem 'gon', '~> 6.4'
 gem 'omniauth'
-gem 'omniauth-github'
-gem 'omniauth-rails_csrf_protection'
-gem 'omniauth-vkontakte'
+gem 'omniauth-github', '~> 2.0'
+gem 'omniauth-vkontakte', '~> 1.8'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -55,6 +55,7 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
+  gem 'letter_opener'
 end
 
 group :test do
@@ -66,6 +67,7 @@ group :test do
   gem 'shoulda-matchers', '~> 5.0'
   gem 'rails-controller-testing'
   gem 'action-cable-testing'
+  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
