@@ -38,6 +38,7 @@ gem "cocoon"
 gem 'gon', '~> 6.4'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-vkontakte'
 
 group :development, :test do
