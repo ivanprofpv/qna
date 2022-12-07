@@ -5,7 +5,7 @@ feature 'User can sign up' do
          password: '12345678', confirmed_at: Time.zone.now) }
   background { visit new_user_registration_path }
 
-  scenario 'Unregistered user trying to register' do
+  scenario 'Unregistered user trying to register', js: true do
     fill_in 'Email', with: 'fake_name@mail.com'
     fill_in 'Password', with: '12345678'
     fill_in 'Password confirmation', with: '12345678'

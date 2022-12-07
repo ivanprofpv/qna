@@ -40,7 +40,18 @@ feature 'User can sign in through oauth' do
     
     click_link('Sign in with Vkontakte')
 
-    expect(page).to have_content('Could not authenticate you from Vkontakte')
+    expect(page).to have_content 'Email confirmation'
+
+    fill_in 'Email', with: 'oauth@test.com'
+    click_button 'Send confirmation link'
+
+    open_email('oauth@test.com')
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_content('Your email address has been successfully confirmed')
+
+    click_link('Sign in with Vkontakte')
+
+    expect(page).to have_content('Successfully authenticated from Vkontakte account.')
   end
 
 end
