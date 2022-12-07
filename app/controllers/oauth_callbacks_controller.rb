@@ -10,7 +10,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def oauth(provider)
- current_request = request.env['omniauth.auth']
+    current_request = request.env['omniauth.auth']
     @user = User.find_for_oauth(current_request)
 
     if @user&.persisted?
