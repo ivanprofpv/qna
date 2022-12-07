@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 feature 'User can sign up' do
-  given(:user) { create(:user) }
+  given(:user) { User.create(email: 'user@test.ru',
+         password: '12345678', confirmed_at: Time.zone.now) }
   background { visit new_user_registration_path }
 
   scenario 'Unregistered user trying to register' do
@@ -10,7 +11,13 @@ feature 'User can sign up' do
     fill_in 'Password confirmation', with: '12345678'
     click_on 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content('A message with a confirmation link has been sent to your email address.')
+
+    open_email('fake_name@mail.com')
+    expect(current_email).to have_content('You can confirm your account email through the link below')
+
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_content('Your email address has been successfully confirmed')
   end
 
   scenario 'Unauthenticated user tries to sign up' do
