@@ -11,7 +11,7 @@ class FindForOauthService
 
     email = auth.info[:email]
 
-    return nil if email.nil?
+    return unless email
 
     user = User.where(email: email).first
     
