@@ -9,33 +9,26 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
+    authorize Answer
     @answer = @question.answers.create(answer_params)
-
     @answer.user = current_user
     publish_answer if @answer.save
     @answer_comment = @answer.comments.new
   end
 
   def update
+    authorize @answer
     @question = @answer.question
-    if current_user&.author?(@answer)
-      @answer.update(answer_params)
-      @answer_comment = @answer.comments.new
-    else
-      redirect_to question_path(@answer.question), notice: 'You are not permitted.'
-    end
+    @answer.update(answer_params)
   end
 
   def destroy
-    if current_user&.author?(@answer)
-      @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Answer successfully deleted.'
-    else
-      redirect_to question_path, notice: 'You cannot delete the wrong answer.'
-    end
+    authorize @answer
+    @answer.destroy
   end
 
   def best
+    authorize @answer
     @question = @answer.question
 
     return unless current_user.author?(@question)

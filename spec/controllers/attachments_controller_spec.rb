@@ -35,9 +35,9 @@ RSpec.describe AttachmentsController, type: :controller do
           end.to_not change(author_attachment.files, :count)
         end
 
-        it 'render destroy' do
+        it 'no render destroy' do
           delete :destroy, params: { id: author_attachment.files.first }, format: :js
-          expect(response).to render_template :destroy
+          expect(response).not_to render_template :destroy
         end
       end
     end

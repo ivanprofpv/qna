@@ -10,26 +10,27 @@
           - answer.files.each do |file|
             .attachment id="attachment-#{file.id}"
               = link_to file.filename.to_s, url_for(file)
-              = " | "
-              = link_to 'Delete attachment', attachment_path(file), method: :delete, remote: true, class: 'attachmentss'
+              - if policy(answer).destroy?
+                = " | "
+                = link_to 'Delete attachment', attachment_path(file), method: :delete, remote: true, class: 'attachmentss'
 
       p
         - answer.links.each do |link|
           div id="link-delete-#{link.id}"
             .link-name
               = link_to link.name, link.url
-              - if current_user&.author?(answer)
+              - if policy(answer).destroy?
                 = " | "
                 = link_to 'Delete link', link_path(link), method: :delete, remote: true
 
       p
-        - if current_user&.author?(answer)
-          p
-            = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, class: 'btn btn-danger delete-answer-link', data: { answer_id: answer.id }
-            = " | "
-            = link_to 'Edit', '#', class: 'btn btn-info edit-answer-link', data: { answer_id: answer.id }
+        - if policy(answer).destroy?
+          = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, class: 'btn btn-danger delete-answer-link', data: { answer_id: answer.id }
+        - if policy(answer).update?
+          = " | "
+          = link_to 'Edit', '#', class: 'btn btn-info edit-answer-link', data: { answer_id: answer.id }
 
-        - if current_user&.author?(answer.question) && !answer.best?
+        - if policy(answer.question).update? && !answer.best?
           p= link_to 'Best answer', best_answer_path(answer),
             remote: true, method: :patch, class: 'btn btn-info best-answer-link', data: { answer_id: answer.id }
 

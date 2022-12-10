@@ -200,9 +200,10 @@ RSpec.describe QuestionsController, type: :controller do
           expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
         end
 
-        it 'redirect to root' do
+        it 'return 403' do
           delete :destroy, params: { id: question }
-          expect(response).to redirect_to root_path
+          expect(response).to redirect_to (request.referrer || root_path)
+
         end
       end
     end

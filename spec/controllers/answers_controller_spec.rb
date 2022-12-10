@@ -79,9 +79,9 @@ RSpec.describe AnswersController, type: :controller do
             expect(answer.body).to_not eq 'new body'
           end
 
-          it 'renders question ' do
+          it 'return 403' do
             patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
-            expect(response).to redirect_to question_path(assigns(:answer).question)
+            expect(response).to redirect_to request.referrer || root_path
           end
 
           it "is not answers user's" do
@@ -152,20 +152,19 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'not the author of the question' do 
+    context 'not the author of the question', format: :js do
       before { login create(:user) }
       let!(:answer) { create(:answer, question: question, user: user) }
 
       it 'can not marks the answer as the best' do
-        patch :best, params: { id: answer }, format: :js
-        answer.reload
+        patch :best, params: { id: answer }
 
         expect(answer).to_not be_best
       end
 
       it 'render best template' do 
-        patch :best, params: { id: answer }, format: :js
-        expect(response).to render_template :best
+        patch :best, params: { id: answer }
+        expect(response).not_to render_template :best
       end
     end
   end
@@ -189,9 +188,9 @@ RSpec.describe AnswersController, type: :controller do
           expect { delete :destroy, params: { id: answer, question_id: question } }.to_not change(Answer, :count)
         end
 
-        it 'redirect to question' do
+        it 'return 403' do
           delete :destroy, params: { id: answer, question_id: question }
-          expect(response).to redirect_to question_path
+          expect(response).to redirect_to request.referrer || root_path
         end
       end
     end

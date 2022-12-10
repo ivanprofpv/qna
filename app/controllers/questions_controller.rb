@@ -35,20 +35,15 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user&.author?(@question)
-      @question.update(question_params)
-    else
-      redirect_to question_path(@question), notice: 'You are not permitted.'
-    end
+    authorize @question
+    @question.update(question_params)
   end
 
   def destroy
-    if current_user&.author?(@question)
-      @question.destroy
-      redirect_to root_path, notice: 'Question successfully deleted!'
-    else
-      redirect_to root_path
-    end
+    authorize @question
+    @question.destroy
+
+    redirect_to root_path, notice: 'Question successfully deleted!'
   end
 
   private
