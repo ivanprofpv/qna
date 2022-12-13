@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (requires ORM extensions installed).
   # Check the list of supported ORMs here: https://github.com/doorkeeper-gem/doorkeeper#orms
@@ -78,7 +76,7 @@ Doorkeeper.configure do
 
   # Authorization Code expiration time (default: 10 minutes).
   #
-  # authorization_code_expires_in 10.minutes
+  authorization_code_expires_in 2.hours
 
   # Access token expiration time (default: 2 hours).
   # If you want to disable expiration, set this to `nil`.
@@ -220,7 +218,7 @@ Doorkeeper.configure do
   # For more information go to
   # https://doorkeeper.gitbook.io/guides/ruby-on-rails/scopes
   #
-  default_scopes  :read
+  # default_scopes  :read
   # optional_scopes :write, :update
 
   # Allows to restrict only certain scopes for grant_type.
