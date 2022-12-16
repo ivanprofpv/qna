@@ -14,6 +14,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def question_all
-    @questions = Question.all
+    Question.all
   end
 end
