@@ -1,11 +1,19 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
   def index
-    @questions = Question.all
-    render json: @questions
+    render json: question_all
   end
 
   def show
-    question = Question.find(params[:id])
     render json: question
+  end
+
+  private
+
+  def question
+    Question.find(params[:id])
+  end
+
+  def question_all
+    @questions = Question.all
   end
 end
