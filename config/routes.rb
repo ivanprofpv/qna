@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     resources :comments, shallow: true, only: %i[create]
   end
 
-  resources :questions, shallow: true, concerns: [:votable, :commentable] do
-    resources :answers, shallow: true, except: :index, concerns: [:votable, :commentable] do
+  resources :questions, shallow: true, concerns: %i[votable commentable] do
+    resources :answers, shallow: true, except: :index, concerns: %i[votable commentable] do
       member do
         patch :best
       end
@@ -34,11 +34,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :profiles, only: [:index] do
+      resources :profiles, only: %i[index] do
         get :me, on: :collection
       end
-      resources :questions, only: [:index, :show] do
-        resources :answers, only: [:index, :show]
+      resources :questions, only: %i[index show create update destroy] do
+        resources :answers, only: %i[index show]
       end
     end
   end
