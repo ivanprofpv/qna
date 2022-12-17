@@ -1,15 +1,13 @@
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) { { "CONTENT_TYPE" => "application/json",
-                    "ACCEPT" => "application/json" } }
-
-  let(:user) { create(:user) }
-  let(:question) { create(:question) }
-  let!(:answers) { create_list(:answer, 5, question: question, user: user) }
+  let(:headers) { { "ACCEPT" => "application/json" } }
 
   describe 'GET /api/v1/questions/:question_id/answers' do
     let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    let!(:answers) { create_list(:answer, 5, question: question, user: user) }
 
     it_behaves_like 'API authorizable' do
       let(:method) { :get }
@@ -31,6 +29,9 @@ describe 'Answers API', type: :request do
   end
 
   describe 'GET /api/v1/questions/:question_id/answers/:id' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    let!(:answers) { create_list(:answer, 5, question: question, user: user) }
     let(:answer) { answers.first }
     let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
 
@@ -68,6 +69,123 @@ describe 'Answers API', type: :request do
         attachments_url = Rails.application.routes.url_helpers.rails_blob_path(answer.files.first, only_path: true)
 
         expect(json['answer']['files'].first['url']).to eq attachments_url 
+      end
+    end
+  end
+
+  describe 'PATCH /api/v1/answers/:id' do
+    let(:user) { create(:user) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+    let(:question) { create(:question, user: user) }
+    let(:answer) { create(:answer, user: user, question: question) }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
+
+    it_behaves_like 'API authorizable' do
+      let(:method) { :patch }
+    end
+
+    context 'authorized' do
+      context 'with valid attributes' do
+        before do
+          patch api_path, params: { id: answer,
+                                    answer: { body: 'body' },
+                                    access_token: access_token.token }
+        end
+
+        it 'changes answer' do
+          answer.reload
+
+          expect(answer.body).to eq 'body'
+        end
+
+        it 'returns status :created' do
+          expect(response.status).to eq 201
+        end
+      end
+
+      context 'with invalid attributes' do
+        before do
+          patch api_path, params: { id: answer,
+                                    answer: { body: '' },
+                                    access_token: access_token.token }
+        end
+
+        it 'does not change attributes of question' do
+          answer.reload
+
+          expect(answer.body).to_not eq 'new body'
+        end
+
+        it 'returns status :unprocessible_entity' do
+          expect(response.status).to eq 422
+        end
+
+        it 'returns error message' do
+          expect(json['errors']).to be
+        end
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/answers/:id' do
+    let(:user) { create(:user) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+    let(:question) { create(:question, user: user) }
+    let(:answer) { create(:answer, user: user, question: question) }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
+
+    it_behaves_like 'API authorizable' do
+      let(:method) { :delete }
+    end
+
+    before do
+      delete api_path, params: { id: answer, access_token: access_token.token }, headers: headers
+    end
+
+    it 'delete answer' do
+      expect(Answer.count).to eq 0
+    end
+  end
+
+  describe 'POST /api/v1/answers/:id' do
+    let(:user) { create(:user) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+    let(:question) { create(:question, user: user) }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+
+    it_behaves_like 'API authorizable' do
+      let(:method) { :post }
+    end
+
+    context 'authorized' do
+      context 'with valid attributes' do
+        before do
+          post api_path, params: { question_id: question, answer: { body: 'body' },
+                                    access_token: access_token.token }
+        end
+
+        it 'save new answer' do
+          expect(Answer.count).to eq 1
+        end
+
+        it 'returns status 201' do
+          expect(response).to have_http_status(:created)
+        end
+      end
+
+      context 'with invalid attributes' do
+        before do
+          post api_path, params: { question_id: question, answer: { body: "" },
+                                    access_token: access_token.token }
+        end
+
+        it 'not save answer' do
+          expect(Answer.count).to eq 0
+        end
+
+        it 'returns status 422' do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end
