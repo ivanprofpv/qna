@@ -48,6 +48,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     params.require(:question).permit(
       :title,
       :body,
+      :user_id,
       links_attributes: [:name, :url, :_destroy]
     )
   end

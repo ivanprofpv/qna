@@ -132,7 +132,7 @@ describe 'Questions API', type: :request do
         end.to_not change(Question, :count)
       end
 
-      it 'returns 201 status' do
+      it 'returns 422 status' do
         post(api_path,
              params: { access_token: access_token.token, question: attributes_for(:question, :invalid) },
              headers: headers)

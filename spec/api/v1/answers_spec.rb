@@ -74,11 +74,11 @@ describe 'Answers API', type: :request do
   end
 
   describe 'PATCH /api/v1/answers/:id' do
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
     let(:user) { create(:user) }
     let(:access_token) { create(:access_token, resource_owner_id: user.id) }
     let(:question) { create(:question, user: user) }
     let(:answer) { create(:answer, user: user, question: question) }
-    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
 
     it_behaves_like 'API authorizable' do
       let(:method) { :patch }
@@ -98,7 +98,7 @@ describe 'Answers API', type: :request do
           expect(answer.body).to eq 'body'
         end
 
-        it 'returns status :created' do
+        it 'returns 201 status' do
           expect(response.status).to eq 201
         end
       end
@@ -116,12 +116,8 @@ describe 'Answers API', type: :request do
           expect(answer.body).to_not eq 'new body'
         end
 
-        it 'returns status :unprocessible_entity' do
+        it 'returns 422 status' do
           expect(response.status).to eq 422
-        end
-
-        it 'returns error message' do
-          expect(json['errors']).to be
         end
       end
     end
@@ -175,7 +171,7 @@ describe 'Answers API', type: :request do
 
       context 'with invalid attributes' do
         before do
-          post api_path, params: { question_id: question, answer: { body: "" },
+          post api_path, params: { question_id: question, answer: { body: '' },
                                     access_token: access_token.token }
         end
 
@@ -184,7 +180,7 @@ describe 'Answers API', type: :request do
         end
 
         it 'returns status 422' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status 422
         end
       end
     end
