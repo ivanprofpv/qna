@@ -5,7 +5,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def show
-    render json: answer
+    render json: answer, serializer: Api::V1::AnswerSerializer
   end
 
   def create
