@@ -16,6 +16,7 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   after_create :calculate_reputation
+  after_create :subscription_author
 
   def user_subscription?(user)
     subscriptions.find_by(user: user)
@@ -26,4 +27,8 @@ class Question < ApplicationRecord
   def calculate_reputation
     ReputationJob.perform_later(self)
   end
+
+  def subscription_author
+    subscriptions.create(user:)
+  end 
 end

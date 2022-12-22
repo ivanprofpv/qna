@@ -14,6 +14,8 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :links, :award, reject_if: :all_blank, allow_destroy: true
 
+  after_create :notify_question_subscribers
+
   def set_best
     Answer.transaction do
       Answer.where(question_id: question_id, best: true).update_all(best: false)
@@ -22,5 +24,11 @@ class Answer < ApplicationRecord
         update!(award: question.award)
       end
     end
+  end
+
+  private
+
+  def notify_question_subscribers
+    QuestionNotificationJob.perform_later(question)
   end
 end

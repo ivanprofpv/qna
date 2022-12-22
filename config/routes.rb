@@ -27,8 +27,6 @@ Rails.application.routes.draw do
     resources :answers, shallow: true, except: :index, concerns: %i[votable commentable] do
       member do
         patch :best
-        post :subscribe
-        delete :unsubscribe
       end
     end
   end
@@ -36,6 +34,7 @@ Rails.application.routes.draw do
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]
   resources :awards, only: %i[index]
+  resources :subscriptions, shallow: true, only: %i[create destroy]
 
   mount ActionCable.server => '/cable'
 
