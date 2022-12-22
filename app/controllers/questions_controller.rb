@@ -12,10 +12,10 @@ class QuestionsController < ApplicationController
   def show
     gon.question_id = @question.id
     gon.user_id = current_user&.id
+    @subscription = @question.subscriptions.find_by(user: current_user)
     @answer = Answer.new
     @answers = @question.answers
     @answer.links.new
-    @subscription = @question.subscriptions.find_by(user: current_user)
   end
 
   def new

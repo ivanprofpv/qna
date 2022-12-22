@@ -29,12 +29,12 @@ Rails.application.routes.draw do
         patch :best
       end
     end
+    resources :subscriptions, shallow: true, only: %i[create destroy]
   end
 
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]
   resources :awards, only: %i[index]
-  resources :subscriptions, shallow: true, only: %i[create destroy]
 
   mount ActionCable.server => '/cable'
 

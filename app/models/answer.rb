@@ -1,5 +1,5 @@
 class Answer < ApplicationRecord
-  
+
   include Votable
   include Commentable
 
@@ -29,6 +29,6 @@ class Answer < ApplicationRecord
   private
 
   def notify_question_subscribers
-    QuestionNotificationJob.perform_later(question)
+    QuestionNotificationsJob.perform_later(question)
   end
 end

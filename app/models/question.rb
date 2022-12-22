@@ -7,7 +7,7 @@ class Question < ApplicationRecord
 
   has_many :answers, -> { order(best: :desc) }, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
-  has_many :subcriptions, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
   has_one :award, dependent: :destroy
   has_many_attached :files
 
@@ -22,13 +22,13 @@ class Question < ApplicationRecord
     subscriptions.find_by(user: user)
   end
 
+  def subscription_author
+    subscriptions.create(user: user)
+  end
+
   private
 
   def calculate_reputation
     ReputationJob.perform_later(self)
   end
-
-  def subscription_author
-    subscriptions.create(user:)
-  end 
 end

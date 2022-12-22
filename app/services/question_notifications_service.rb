@@ -1,7 +1,7 @@
 class QuestionNotificationsService
   def initialize(question)
     @question = question
-    @subscribers = question.subcriptions.map(&:user)
+    @subscribers = question.subscriptions.map(&:user)
   end
 
   def call

@@ -3,9 +3,10 @@ class SubscriptionsController < ApplicationController
 
   def create
     question = Question.find(params[:question_id])
-    @subscription = question.subscription.create(user: current_user)
+    byebug
+    @subscription = question.subscriptions.create(user: current_user)
 
-    render partial: 'questions/subscribe' if @subscribe.save
+    @subscription.save
   end
 
   def destroy

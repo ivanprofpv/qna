@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  let(:user) { create{:user} }
+  let(:user) { create(:user) }
   let(:question) { create(:question) }
 
   describe 'POST #create' do
@@ -13,7 +13,8 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect do
           post :create, params: { question_id: question },
                 format: :js
-      end.to change(Subscription, :count).by(1)
+        end.to change(question.subscriptions, :count).by(1)
+      end
     end
 
     context 'unauthenticated user' do
@@ -22,7 +23,8 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect do
           post :create, params: { question_id: question },
                 format: :js
-      end.to change(Subscription, :count).by(1)
+        end.to change(question.subscriptions, :count).by(1)
+      end
 
       it 'return 401 status' do
         post :create, params: { question_id: question },
@@ -34,16 +36,15 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:subscription) { create(:subscription, user_id: user.id) }
-
     context 'authenticated user' do
       before { login(user) }
 
       it 'delete subscribe' do
         expect do
-          post :destroy, params: { id: subscription },
+          post :destroy, params: { id: question.subscriptions.first },
                 format: :js
-      end.to change(Subscription, :count).by(0)
+        end.to change(question.subscriptions, :count).by(-1)
+      end
 
       it 'return successfull delete' do
         post :destroy, params: { id: subscription }, format: :js
@@ -54,17 +55,17 @@ RSpec.describe SubscriptionsController, type: :controller do
         let(:other_user) { create(:user) }
 
         before { login(other_user) }
-        
+
         it 'does not delete subscribe' do
           expect do
-          post :destroy, params: { id: subscription }, format: :js
-        end.to_not change(Subscription, :count)
+            post :destroy, params: { id: question.subscriptions.first }, format: :js
+          end.to_not change(question.subscriptions, :count)
+        end
 
         it 'return 403 status' do
-          post :destroy, params: { id: subscription }, format: :js
+          post :destroy, params: { id: question.subscriptions.first }, format: :js
           expect(response.status).to eq 403
         end
-      end
     end
 
     context 'unauthenticated user' do
@@ -74,7 +75,8 @@ RSpec.describe SubscriptionsController, type: :controller do
           post :destroy,
                params: { id: subscription },
                format: :js
-      end.to_not change(Subscription, :count)
+        end.to_not change(question.subscriptions, :count)
+      end
 
       it 'redirect to sign in' do
         post :destroy, params: { id: subscription }, format: :js
