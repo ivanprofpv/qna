@@ -1,0 +1,12 @@
+div class="subscription"
+  = button_to 'Subscribe',
+    question_subscriptions_path(@question),
+    remote: true,
+    class: "btn btn-info subscribe-button #{'hidden' if @question.user_subscription?(current_user)}"
+
+  - @question.user_subscription?(current_user)
+    = button_to 'Unsubscribe',
+      subscription_path(@subscription),
+      method: :delete,
+      remote: true,
+      class: "btn btn-secondary unsubscribe-button"

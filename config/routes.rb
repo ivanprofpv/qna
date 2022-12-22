@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :answers, shallow: true, except: :index, concerns: %i[votable commentable] do
       member do
         patch :best
+        post :subscribe
+        delete :unsubscribe
       end
     end
   end

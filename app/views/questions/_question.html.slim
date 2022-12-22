@@ -58,6 +58,8 @@
         p= f.submit 'Save', class: 'btn btn-success'
 
   p
+  - if current_user
+    = render 'subscribe'
 
   p= "Comments:"
 
