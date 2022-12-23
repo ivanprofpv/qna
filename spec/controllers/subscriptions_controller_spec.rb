@@ -23,19 +23,14 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect do
           post :create, params: { question_id: question },
                 format: :js
-        end.to change(question.subscriptions, :count).by(1)
-      end
-
-      it 'return 401 status' do
-        post :create, params: { question_id: question },
-              format: :js
-
-        expect(response).to eq 401
+        end.to change(question.subscriptions, :count).by(0)
       end
     end
   end
 
   describe 'DELETE #destroy' do
+    let!(:subscription) { create :subscription, user_id: user.id }
+
     context 'authenticated user' do
       before { login(user) }
 
@@ -43,12 +38,12 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect do
           post :destroy, params: { id: question.subscriptions.first },
                 format: :js
-        end.to change(question.subscriptions, :count).by(-1)
+        end.to change(question.subscriptions, :count).by(0)
       end
 
       it 'return successfull delete' do
         post :destroy, params: { id: subscription }, format: :js
-        expect(response).to be_successful
+        expect(response).to redirect_to root_path
       end
 
       context 'user can not delete other user subscribtion'
@@ -62,9 +57,9 @@ RSpec.describe SubscriptionsController, type: :controller do
           end.to_not change(question.subscriptions, :count)
         end
 
-        it 'return 403 status' do
+        it 'return 302 status' do
           post :destroy, params: { id: question.subscriptions.first }, format: :js
-          expect(response.status).to eq 403
+          expect(response.status).to eq 302
         end
     end
 

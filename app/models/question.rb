@@ -25,7 +25,7 @@ class Question < ApplicationRecord
   private
 
   def subscription_author
-    subscriptions.create(user: self)
+    subscriptions.create(user: user)
   end
 
   def calculate_reputation

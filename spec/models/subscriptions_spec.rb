@@ -7,7 +7,7 @@ RSpec.describe Subscription, type: :model do
   it 'validation' do
     user = create(:user)
     question = create(:question)
-    subscription = user.subscription.create(question: question)
+    subscription = user.subscriptions.create(question: question)
 
     expect(subscription).to validate_uniqueness_of(:question_id).scoped_to(:user_id)
   end
