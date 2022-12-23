@@ -1,8 +1,0 @@
-$('.subscribe-button').addClass('hidden')
-$('.subscription-control').append(
-   <%= button_to 'Unsubscribe',
-                subscription_path(@subscription),
-                method: :destroy,
-                remote: true,
-                class: "btn btn-secondary unsubscribe-button" %>
-)

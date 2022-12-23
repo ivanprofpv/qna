@@ -5,6 +5,9 @@
     = @question.title
   .question-body
     = @question.body
+  .subscription
+    - if current_user
+      = render 'subscribe'
 
   p
 
@@ -56,10 +59,6 @@
           p= link_to_add_association 'Add link', f, :links,
               partial: 'links/link'
         p= f.submit 'Save', class: 'btn btn-success'
-
-  p
-  - if current_user
-    = render 'subscribe'
 
   p= "Comments:"
 

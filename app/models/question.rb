@@ -22,11 +22,11 @@ class Question < ApplicationRecord
     subscriptions.find_by(user: user)
   end
 
-  def subscription_author
-    subscriptions.create(user: user)
-  end
-
   private
+
+  def subscription_author
+    subscriptions.create(user: self)
+  end
 
   def calculate_reputation
     ReputationJob.perform_later(self)

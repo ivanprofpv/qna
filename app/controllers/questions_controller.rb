@@ -38,6 +38,7 @@ class QuestionsController < ApplicationController
   def update
     authorize @question
     @question.update(question_params)
+    @subscription = @question.subscriptions.find_by(user: current_user)
   end
 
   def destroy
