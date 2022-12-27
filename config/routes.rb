@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   resources :links, only: %i[destroy]
   resources :awards, only: %i[index]
 
+  get :search, to: 'search#index'
+
   mount ActionCable.server => '/cable'
 
   namespace :api do

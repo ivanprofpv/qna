@@ -101,6 +101,10 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
     crass (1.0.6)
+    database_cleaner-active_record (2.0.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.1)
     devise (4.8.1)
       bcrypt (~> 3.0)
@@ -170,8 +174,6 @@ GEM
     multi_xml (0.6.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    mysql2 (0.4.10)
-    mysql2 (0.4.10-x64-mingw32)
     net-imap (0.3.2)
       date
       net-protocol
@@ -415,6 +417,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   capybara-email
   cocoon
+  database_cleaner-active_record
   devise
   doorkeeper
   factory_bot_rails
@@ -422,7 +425,6 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jquery-rails
   letter_opener
-  mysql2 (~> 0.4.1)
   octicons_helper
   oj
   omniauth

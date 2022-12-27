@@ -1,0 +1,6 @@
+- if @results.any?
+  - @results.each do |result|
+    = render partial: "search/#{result.class.name.underscore}",
+             locals: { resource: result }
+- else
+  p= 'No result'
