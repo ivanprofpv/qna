@@ -1,3 +1,6 @@
-p= link_to question.title, question_path(question), target: :_blank
-p= question.body
-p= question&.user&.email
+.search-result
+  b= "Question:"
+  p= link_to resource.title, resource, target: :_blank
+  p= resource.body
+  b= "Author:"
+  p= resource&.user&.email

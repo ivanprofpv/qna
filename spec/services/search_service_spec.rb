@@ -5,14 +5,14 @@ RSpec.describe SearchService do
   let(:question) { create(:question) }
 
   it 'search in ThinkingSphinx - All' do
-    allow(ThinkingSphinx).to receive(:search).with(question.title).and_return [question]
+    allow(ThinkingSphinx).to receive(:search).with(question.title, order: 'created_at DESC').and_return [question]
     search.new(question.title, 'All').call
 
     expect(ThinkingSphinx).to have_received(:search)
   end
 
   it 'search in QuestionsIndex' do
-    allow(question.class).to receive(:search).with(question.title).and_return [question]
+    allow(question.class).to receive(:search).with(question.title, order: 'created_at DESC').and_return [question]
     search.new(question.title, 'Question').call
 
     expect(question.class).to have_received(:search)

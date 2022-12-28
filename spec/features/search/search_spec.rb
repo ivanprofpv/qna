@@ -4,13 +4,12 @@ SCOPES = %w[User Question Answer Comment].freeze
 
 feature 'User can search for users/questions/answers/comments', js: true do
   given!(:user) { create(:user, email: 'test@test.com') }
-  given!(:question) { create(:question, title: 'Ruby Question', user:) }
-  given!(:answer) { create(:answer, body: 'Ruby Answer', question:, user:) }
-  given!(:comment) { create(:comment, body: 'Ruby Comment', commentable: answer, user:) }
+  given!(:question) { create(:question, title: 'Ruby Question', user: user) }
+  given!(:answer) { create(:answer, body: 'Ruby Answer', question: question, user: user) }
+  given!(:comment) { create(:comment, body: 'Ruby Comment', commentable: answer, user: user) }
 
   background { visit questions_path }
 
-  # rubocop:disable RSpec/MultipleExpectations
   scenario 'User searches in All scope', sphinx: true do
     ThinkingSphinx::Test.run do
       fill_in(placeholder: 'Search for:', with: 'ruby')
@@ -23,7 +22,6 @@ feature 'User can search for users/questions/answers/comments', js: true do
       expect(page).to have_content(comment.body)
     end
   end
-  # rubocop:enable RSpec/MultipleExpectations
 
   SCOPES.each do |scope|
     scenario "User searches in #{scope}s scope", sphinx: true do
