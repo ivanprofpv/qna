@@ -49,14 +49,14 @@ gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2', '~> 0.5.3'
 gem 'thinking-sphinx'
+gem 'net-imap', '~> 0.3.1'
+gem 'net-pop', '~> 0.1.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.1.0'
   gem 'factory_bot_rails'
-  gem 'rubocop'
-  gem 'database_cleaner-active_record'
 end
 
 group :development do
@@ -66,6 +66,13 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'letter_opener'
+  gem 'rubocop'
+  gem "capistrano", "~> 3.17", require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do
@@ -78,6 +85,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'action-cable-testing'
   gem 'capybara-email'
+  gem 'database_cleaner-active_record'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
