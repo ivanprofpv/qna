@@ -51,6 +51,7 @@ gem 'mysql2', '~> 0.5.3'
 gem 'thinking-sphinx'
 gem 'net-imap', '~> 0.3.1'
 gem 'net-pop', '~> 0.1.2'
+gem 'net-http'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
