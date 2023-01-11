@@ -3,6 +3,8 @@ lock "~> 3.17.1"
 
 set :application, "QNA"
 set :repo_url, "git@github.com:ivanprofpv/qna.git"
+set :rails_env, 'production'
+
 
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
