@@ -1,10 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.1"
 
-set :application, "QNA"
+set :application, "qna"
 set :repo_url, "git@github.com:ivanprofpv/qna.git"
-set :rails_env, 'production'
-
 
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
