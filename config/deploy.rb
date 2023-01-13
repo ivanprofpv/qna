@@ -3,13 +3,13 @@ lock "~> 3.17.1"
 
 set :application, "qna"
 set :repo_url, "git@github.com:ivanprofpv/qna.git"
+set :pty, false
 
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
-set :pty, false
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
@@ -19,4 +19,10 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpack
 
 set :keep_releases, 4
 
-before "deploy:assets:precompile", "deploy:yarn_install"
+after 'deploy:publishing', 'deploy:restart'
+
+namespace :deploy do
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+end
