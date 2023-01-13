@@ -51,7 +51,6 @@ gem 'mysql2', '~> 0.5.3'
 gem 'thinking-sphinx'
 gem 'net-imap', '~> 0.3.1'
 gem 'net-pop', '~> 0.1.2'
-gem 'net-http'
 gem 'mini_racer'
 
 group :development, :test do
@@ -75,7 +74,6 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
-  gem 'rake'
 end
 
 group :test do

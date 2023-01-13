@@ -198,8 +198,6 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     mysql2 (0.5.4)
-    net-http (0.3.2)
-      uri
     net-imap (0.3.4)
       date
       net-protocol
@@ -402,7 +400,6 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    uri (0.12.0)
     version_gem (1.1.1)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -458,7 +455,6 @@ DEPENDENCIES
   letter_opener
   mini_racer
   mysql2 (~> 0.5.3)
-  net-http
   net-imap (~> 0.3.1)
   net-pop (~> 0.1.2)
   octicons_helper
@@ -473,7 +469,6 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7)
   rails-controller-testing
-  rake
   rspec-rails (~> 4.1.0)
   rubocop
   sass-rails (>= 6)
