@@ -75,6 +75,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'rake'
 end
 
 group :test do
