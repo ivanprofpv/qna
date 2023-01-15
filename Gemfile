@@ -51,7 +51,6 @@ gem 'mysql2', '~> 0.5.3'
 gem 'thinking-sphinx'
 gem 'net-imap'
 gem 'net-smtp'
-gem 'mini_racer'
 gem 'net-http'
 gem 'uri', '0.10.0'
 
