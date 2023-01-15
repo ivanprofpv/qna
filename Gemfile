@@ -70,10 +70,10 @@ group :development do
   gem 'letter_opener'
   gem 'rubocop'
   gem "capistrano", "~> 3.17", require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rbenv', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
 end
 
