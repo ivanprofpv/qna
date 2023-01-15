@@ -53,6 +53,7 @@ gem 'net-imap'
 gem 'net-smtp'
 gem 'net-http'
 gem 'uri', '0.10.0'
+gem 'rake'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -75,7 +76,6 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
-  gem 'rake'
 end
 
 group :test do
