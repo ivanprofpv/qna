@@ -5,6 +5,8 @@ set :application, "qna"
 set :repo_url, "git@github.com:ivanprofpv/qna.git"
 set :pty, false
 
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
+
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
