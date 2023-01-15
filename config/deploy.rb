@@ -13,7 +13,7 @@ set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
 
 set :default_env, {
-    path: '/home/deployer/rbenv/plugins/ruby-build/bin:/home/deployer/rbenv/shims:/usr/local/rbenv/bin:$PATH',
+    path: '/home/deployer/rbenv/plugins/ruby-build/bin:/home/deployer/rbenv/shims:/home/deployer/rbenv/bin:$PATH',
     rbenv_root: '/home/deployer/rbenv'
 }
 
