@@ -12,6 +12,11 @@ set :branch, "deploy_capistrano"
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
 
+set :default_env, {
+    path: '/home/deployer/rbenv/plugins/ruby-build/bin:/home/deployer/rbenv/shims:/usr/local/rbenv/bin:$PATH',
+    rbenv_root: '/home/deployer/rbenv'
+}
+
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
 
