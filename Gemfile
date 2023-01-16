@@ -70,11 +70,12 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'letter_opener'
   gem 'rubocop'
-  gem 'capistrano', require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-passenger', require: false
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-passenger'
+  gem 'capistrano-sidekiq'
 end
 
 group :test do
