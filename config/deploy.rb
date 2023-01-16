@@ -17,7 +17,7 @@ set :deploy_user, 'deployer'
 #     rbenv_root: '/home/deployer/rbenv'
 # }
 
-set :rbenv_prefix, '/usr/bin/rbenv exec'
+# set :rbenv_prefix, '/usr/bin/rbenv exec'
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
