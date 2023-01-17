@@ -55,12 +55,6 @@ gem 'net-http'
 gem 'uri', '0.10.0'
 gem 'mini_racer'
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'rspec-rails', '~> 4.1.0'
-  gem 'factory_bot_rails'
-end
-
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 4.1.0'
@@ -69,12 +63,18 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'letter_opener'
   gem 'rubocop'
-  gem 'capistrano'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano-passenger'
-  gem 'capistrano-sidekiq'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
+end
+
+group :test, :development do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails', '~> 4.1.0'
+  gem 'factory_bot_rails'
 end
 
 group :test do
