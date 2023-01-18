@@ -3,7 +3,7 @@ lock "~> 3.17.1"
 
 set :application, "qna"
 set :repo_url, "git@github.com:ivanprofpv/qna.git"
-# set :pty, false
+set :pty, false
 
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :branch, "deploy_capistrano"
@@ -11,13 +11,6 @@ set :branch, "deploy_capistrano"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deploy/qna"
 set :deploy_user, 'deploy'
-
-# set :default_env, {
-#     path: '/home/deployer/rbenv/plugins/ruby-build/bin:/home/deployer/rbenv/shims:/home/deployer/rbenv/bin:$PATH',
-#     rbenv_root: '/home/deployer/rbenv'
-# }
-
-# set :rbenv_prefix, '/usr/bin/rbenv exec'
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
