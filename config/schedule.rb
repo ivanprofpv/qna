@@ -1,4 +1,4 @@
-set :output, "/home/deployer/qna/log/cron.log"
+set :output, "/home/deploy/qna/log/cron.log"
 
 every 1.day do
   runner "DailyDigestJob.perform_now"
