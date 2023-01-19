@@ -71,7 +71,7 @@ Rails.application.configure do
     user_name: Rails.application.credentials[Rails.env.to_sym][:smtp][:username],
     password: Rails.application.credentials[Rails.env.to_sym][:smtp][:password],
     authentication: :plain,
-    enable_starttls_auth: true
+    # enable_starttls_auth: true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.

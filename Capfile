@@ -10,6 +10,7 @@ require 'capistrano/passenger'
 require 'capistrano/sidekiq'
 require "thinking_sphinx/capistrano"
 require "whenever/capistrano"
+require 'capistrano/rails/console'
 install_plugin Capistrano::Sidekiq
 install_plugin Capistrano::Sidekiq::Systemd
 
