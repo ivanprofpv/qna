@@ -54,6 +54,7 @@ gem 'net-smtp'
 gem 'net-http'
 gem 'uri', '0.10.0'
 gem 'mini_racer'
+gem 'unicorn'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -70,6 +71,7 @@ group :development do
   gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano-rails-console', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test, :development do
