@@ -6,7 +6,7 @@ set :repo_url, "git@github.com:ivanprofpv/qna.git"
 set :pty, false
 
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, "deploy_capistrano"
+set :branch, "unicorn_deploy"
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deploy/qna"
