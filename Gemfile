@@ -55,7 +55,7 @@ gem 'net-http'
 gem 'uri', '0.10.0'
 gem 'mini_racer'
 gem 'unicorn'
-gem 'hiredis'
+gem 'redis-rails'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
