@@ -161,6 +161,7 @@ GEM
       multi_json
       request_store (>= 1.0)
     hashie (5.0.0)
+    hiredis (0.6.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     innertube (1.1.0)
@@ -468,6 +469,7 @@ DEPENDENCIES
   doorkeeper
   factory_bot_rails
   gon (~> 6.4)
+  hiredis
   jbuilder (~> 2.7)
   jquery-rails
   letter_opener

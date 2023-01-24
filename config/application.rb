@@ -21,6 +21,7 @@ module Qna
     config.active_job.queue_adapter = :sidekiq
     config.action_cable.disable_request_forgery_protection = false
     config.eager_load_paths.reject! { |path| path == Rails.root.join("app", "indices").to_s }
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache/', { expires_in: 90.minutes }
 
     config.generators do |g|
       g.test_framework :rspec,
