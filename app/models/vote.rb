@@ -1,6 +1,6 @@
 class Vote < ApplicationRecord
   belongs_to :user
-  belongs_to :votable, polymorphic: true
+  belongs_to :votable, polymorphic: true, touch: true
 
   enum vote_weight: { dislike: -1, like: 1 }
 
