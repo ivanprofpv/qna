@@ -7,7 +7,7 @@ add answers, upload files and add links.
 
 The following technologies were used in this project:
 * Rails 6
-* webpacker 5
+* Webpacker 5
 * Views: Bootstrap
 * Postgresql (10-12)
 * ActiveStorage
