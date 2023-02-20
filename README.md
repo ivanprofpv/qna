@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an educational analogue of the Stackoverflow site, where the user can create questions,
+add answers, upload files and add links.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The following technologies were used in this project:
+* Rails 6
+* webpacker 5
+* Views: Bootstrap
+* Postgresql (10-12)
+* ActiveStorage
+* Action cable
+* JQuery
+* Ajax
+* Basic JS
+* RSPEC
+* Gems used: Devise, Pundit, Sidekiq, Omniauth, Capistrano
