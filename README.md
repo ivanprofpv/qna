@@ -1,5 +1,7 @@
 # README
 
+An educational project that was made in the process of learning the Ruby on Rails framework at the Thinknetica online school.
+
 This is an educational analogue of the Stackoverflow site, where the user can create questions,
 add answers, upload files and add links.
 
